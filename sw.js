@@ -1,4 +1,4 @@
-const CACHE_NAME = 'afit-market-offline-v1.2.0';
+const CACHE_NAME = 'bryt-dgm-offline-v2.0.0';
 // Make sure this path matches exactly where you saved your offline page!
 const OFFLINE_URL = 'offline.html';
 
