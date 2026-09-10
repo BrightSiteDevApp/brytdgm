@@ -3,64 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Vendor Dashboard | AFIT Digital Market</title>
+    <title>Vendor Dashboard | BRYT DGM</title>
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../asset/style.css">
-    <link rel="icon" href="../asset/img/app-logo.png" type="image/png" sizes="192x192">
+    <link rel="icon" href="../asset/img/bryt-app-logo.png" type="image/png" sizes="192x192">
     <link rel="icon" href="../favicon.ico" type="image/x-icon">
 
     <style>
-        /* 🚀 ADDED MISSING ROOT VARIABLES */
+        /* 🚀 BRYT TECHNOLOGIES VARIABLES */
         :root {
-            --brand-color: #2563eb;
-            --text-main: #0f172a;
+            --brand-color: #1D5ED0;
+            --brand-hover: #159FE3;
+            --navy-deep: #071A3A;
+            --text-main: #0B1220;
             --text-muted: #64748b;
         }
+
+        body { font-family: 'Sora', sans-serif; }
 
         .header-top-flex { display: flex; align-items: center; gap: 15px; margin-bottom: 5px; }
         .page-title { font-size: 20px; font-weight: 800; color: var(--text-main); margin: 0; }
         
         /* State Containers */
         #loading-state { text-align: center; padding: 100px 20px; color: #94a3b8; }
-        #not-vendor-state, #pending-state { display: none; text-align: center; padding: 60px 20px; background: white; margin: 20px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #f1f5f9; }
+        #not-vendor-state, #pending-state { display: none; text-align: center; padding: 60px 20px; background: white; margin: 20px; border-radius: 20px; box-shadow: 0 4px 15px rgba(11, 18, 32, 0.03); border: 1px solid #f5f8fc; }
         .state-icon { font-size: 50px; margin-bottom: 15px; color: #cbd5e1; }
         .state-title { font-size: 18px; font-weight: 800; color: var(--text-main); margin-bottom: 10px; }
         .state-desc { font-size: 14px; color: var(--text-muted); line-height: 1.5; margin-bottom: 25px; }
         
-        /* 🚀 FIXED BUTTON STYLE */
-        .action-btn { background: var(--brand-color); color: white; border: none; padding: 15px 20px; border-radius: 14px; font-size: 15px; font-weight: 800; width: 100%; cursor: pointer; text-decoration: none; display: inline-block; box-sizing: border-box; transition: 0.2s; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3); }
-        .action-btn:active { transform: scale(0.98); }
+        /* 🚀 FIXED BUTTON STYLE (BRYT Colors) */
+        .action-btn { background: var(--brand-color); color: white; border: none; padding: 15px 20px; border-radius: 14px; font-size: 15px; font-weight: 800; width: 100%; cursor: pointer; text-decoration: none; display: inline-block; box-sizing: border-box; transition: 0.2s; box-shadow: 0 4px 15px rgba(29, 94, 208, 0.3); }
+        .action-btn:active { transform: scale(0.98); background: var(--brand-hover); box-shadow: 0 2px 8px rgba(29, 94, 208, 0.2); }
 
-        /* Dashboard State - Redesigned to AFIT Blue Gradient */
+        /* Dashboard State - Redesigned to BRYT Gradient */
         #dashboard-state { display: none; padding: 20px; }
-        .dash-card { background: linear-gradient(135deg, #2563eb, #1e3a8a); color: white; padding: 25px 20px; border-radius: 20px; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3); position: relative; overflow: hidden; }
-        .dash-card::after { content: ''; position: absolute; top: -50%; right: -20%; width: 200px; height: 200px; background: rgba(255,255,255,0.1); border-radius: 50%; }
-        .dash-name { font-size: 22px; font-weight: 800; margin-bottom: 5px; position: relative; z-index: 2; }
+        .dash-card { background: linear-gradient(135deg, var(--brand-color), var(--navy-deep)); color: white; padding: 25px 20px; border-radius: 20px; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(29, 94, 208, 0.25); position: relative; overflow: hidden; }
+        .dash-card::after { content: ''; position: absolute; top: -50%; right: -20%; width: 200px; height: 200px; background: rgba(255,255,255,0.05); border-radius: 50%; }
+        .dash-name { font-size: 22px; font-weight: 800; margin-bottom: 5px; position: relative; z-index: 2; letter-spacing: -0.3px;}
         .dash-slots { font-size: 13px; color: rgba(255,255,255,0.8); font-weight: 600; position: relative; z-index: 2; }
-        .slot-bar { width: 100%; height: 8px; background: rgba(0,0,0,0.2); border-radius: 4px; margin-top: 12px; overflow: hidden; position: relative; z-index: 2; }
+        .slot-bar { width: 100%; height: 8px; background: rgba(0,0,0,0.3); border-radius: 4px; margin-top: 12px; overflow: hidden; position: relative; z-index: 2; }
         .slot-fill { height: 100%; background: #ffffff; border-radius: 4px; width: 0%; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
 
         /* Form Styling */
-        .form-card { background: white; padding: 25px 20px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 35px; border: 1px solid #f1f5f9; }
+        .form-card { background: white; padding: 25px 20px; border-radius: 20px; box-shadow: 0 4px 15px rgba(11, 18, 32, 0.03); margin-bottom: 35px; border: 1px solid #f5f8fc; }
         .form-group { margin-bottom: 18px; }
         .form-label { display: block; font-size: 13px; font-weight: 800; color: var(--text-main); margin-bottom: 8px; }
-        .form-input { width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 14px; background: #f8fafc; outline: none; box-sizing: border-box; transition: 0.2s; }
+        .form-input { width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 14px; font-family: 'Sora', sans-serif; background: #f5f8fc; outline: none; box-sizing: border-box; transition: 0.2s; }
         .form-input:focus { border-color: var(--brand-color); background: white; }
 
         /* Inventory Grid */
         .inventory-header { font-size: 18px; font-weight: 800; color: var(--text-main); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
         .inventory-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-        .inv-card { background: white; border-radius: 16px; padding: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; position: relative; display: flex; flex-direction: column; }
-        .inv-img { width: 100%; height: 140px; object-fit: cover; border-radius: 12px; background: #eee; margin-bottom: 12px; }
+        .inv-card { background: white; border-radius: 16px; padding: 12px; box-shadow: 0 4px 15px rgba(11, 18, 32, 0.04); border: 1px solid #f5f8fc; position: relative; display: flex; flex-direction: column; }
+        .inv-img { width: 100%; height: 140px; object-fit: cover; border-radius: 12px; background: #f5f8fc; margin-bottom: 12px; }
         .inv-price { font-size: 16px; font-weight: 800; color: var(--brand-color); margin-bottom: 4px; }
         .inv-title { font-size: 13px; font-weight: 600; color: var(--text-main); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 12px; flex-grow: 1; }
         
         .inv-actions { display: flex; gap: 8px; margin-bottom: 8px; }
-        .inv-btn { flex: 1; padding: 10px; border: none; border-radius: 10px; font-size: 12px; font-weight: 800; cursor: pointer; color: white; transition: 0.2s; display: flex; justify-content: center; align-items: center; }
+        .inv-btn { flex: 1; padding: 10px; border: none; border-radius: 10px; font-size: 12px; font-family: 'Sora', sans-serif; font-weight: 800; cursor: pointer; color: white; transition: 0.2s; display: flex; justify-content: center; align-items: center; }
         .inv-btn:active { transform: scale(0.95); }
-        .btn-edit { background: #f1f5f9; color: #1e293b; }
+        .btn-edit { background: #f1f5f9; color: #0B1220; }
         .btn-delete { background: #fee2e2; color: #ef4444; }
         
         .btn-sold { background: #fffbeb; color: #f59e0b; width: 100%; }
@@ -71,18 +76,18 @@
         .badge-active { background: #10b981; }
 
         /* Edit Modal */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(5px); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(7, 26, 58, 0.8); backdrop-filter: blur(5px); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
         .modal-body { background: white; width: 100%; max-width: 420px; border-radius: 24px; padding: 30px; position: relative; animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1); max-height: 85vh; overflow-y: auto; }
         @keyframes slideUp { from {transform: translateY(30px) scale(0.95); opacity: 0;} to {transform: translateY(0) scale(1); opacity: 1;} }
-        .close-btn { position: absolute; top: 20px; right: 20px; font-size: 24px; color: #94a3b8; cursor: pointer; background: #f1f5f9; border: none; width: 36px; height: 36px; border-radius: 50%; display: flex; justify-content: center; align-items: center; transition: 0.2s; }
+        .close-btn { position: absolute; top: 20px; right: 20px; font-size: 24px; color: #94a3b8; cursor: pointer; background: #f5f8fc; border: none; width: 36px; height: 36px; border-radius: 50%; display: flex; justify-content: center; align-items: center; transition: 0.2s; }
         .close-btn:active { background: #e2e8f0; }
         
         /* ========================================= */
-        /* 🌙 DARK MODE FIXES                        */
+        /* 🌙 DARK MODE FIXES (BRYT NAVY THEME)      */
         /* ========================================= */
-        body.dark-mode { background-color: #020617 !important; }
-        body.dark-mode .app-container { background: #0f172a !important; }
-        body.dark-mode .header { background: #1e293b !important; box-shadow: 0 2px 10px rgba(0,0,0,0.5) !important; border-bottom: 1px solid #334155; }
+        body.dark-mode { background-color: #071A3A !important; }
+        body.dark-mode .app-container { background: #0B1220 !important; }
+        body.dark-mode .header { background: #0B1220 !important; box-shadow: 0 2px 10px rgba(0,0,0,0.5) !important; border-bottom: 1px solid #1a2c4d; }
 
         body.dark-mode .page-title, 
         body.dark-mode .state-title, 
@@ -94,31 +99,31 @@
         body.dark-mode #not-vendor-state, 
         body.dark-mode #pending-state,
         body.dark-mode .form-card { 
-            background: #1e293b !important; 
-            border-color: #334155 !important; 
+            background: #071A3A !important; 
+            border-color: #1a2c4d !important; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important; 
         }
 
-        body.dark-mode #pending-state .action-btn { background: #334155 !important; color: #f1f5f9 !important; box-shadow: none; }
+        body.dark-mode #pending-state .action-btn { background: #0B1220 !important; color: #f1f5f9 !important; box-shadow: none; }
 
         body.dark-mode .form-label { color: #cbd5e1 !important; }
         body.dark-mode .form-input { 
-            background: #0f172a !important; 
+            background: #0B1220 !important; 
             color: #f1f5f9 !important; 
-            border-color: #334155 !important; 
+            border-color: #1a2c4d !important; 
         }
         body.dark-mode .form-input:focus { border-color: var(--brand-color) !important; }
 
-        body.dark-mode .inv-card { background: #1e293b !important; border-color: #334155 !important; }
+        body.dark-mode .inv-card { background: #071A3A !important; border-color: #1a2c4d !important; }
         body.dark-mode .inv-title { color: #f1f5f9 !important; }
         
-        body.dark-mode .btn-edit { background: #334155 !important; color: #f1f5f9 !important; }
-        body.dark-mode .btn-delete { background: rgba(239, 68, 68, 0.2) !important; }
-        body.dark-mode .btn-sold { background: rgba(245, 158, 11, 0.2) !important; }
-        body.dark-mode .btn-active { background: rgba(16, 185, 129, 0.2) !important; }
+        body.dark-mode .btn-edit { background: #0B1220 !important; color: #f1f5f9 !important; }
+        body.dark-mode .btn-delete { background: rgba(239, 68, 68, 0.15) !important; }
+        body.dark-mode .btn-sold { background: rgba(245, 158, 11, 0.15) !important; }
+        body.dark-mode .btn-active { background: rgba(16, 185, 129, 0.15) !important; }
 
-        body.dark-mode .modal-body { background: #1e293b !important; color: #f1f5f9 !important; border: 1px solid #334155 !important; }
-        body.dark-mode .close-btn { background: #334155 !important; color: #f1f5f9 !important; }
+        body.dark-mode .modal-body { background: #071A3A !important; color: #f1f5f9 !important; border: 1px solid #1a2c4d !important; }
+        body.dark-mode .close-btn { background: #0B1220 !important; color: #f1f5f9 !important; }
     </style>
 </head>
 <body>
@@ -160,7 +165,7 @@
                 </div>
 
                 <div class="form-card">
-                    <h3 style="margin: 0 0 20px; font-size: 16px; display: flex; align-items: center; gap: 8px;"><i class="fas fa-plus-circle" style="color: var(--brand-color);"></i> Post New Item</h3>
+                    <h3 style="margin: 0 0 20px; font-size: 16px; display: flex; align-items: center; gap: 8px;"><i class="fas fa-plus-circle" style="color: var(--brand-hover);"></i> Post New Item</h3>
                     
                     <div class="form-group">
                         <label class="form-label">Item Name</label>
@@ -268,9 +273,7 @@
     <script src="../asset/script.js"></script>
 
    <script>
-    // ⚠️ PUT YOUR CLOUDINARY CLOUD NAME HERE
     const CLOUD_NAME = "dgsblxgni"; 
-    // ⚠️ PUT YOUR NEW SINGLE PRESET NAME HERE
     const UPLOAD_PRESET = "afit_media";
 
     let currentUser = null;
@@ -297,7 +300,6 @@
             else {
                 myVendorData = data;
                 document.getElementById('dashboard-state').style.display = 'block';
-                // innerText is naturally safe from XSS
                 document.getElementById('dash-business-name').innerText = data.business_name;
                 
                 const maxAllowed = data.max_items || 5; 
@@ -349,8 +351,6 @@
                     ? `<button class="inv-btn btn-active" onclick="toggleStatus('${p.id}', 'Active')"><i class="fas fa-check" style="margin-right: 5px;"></i> Mark Active</button>`
                     : `<button class="inv-btn btn-sold" onclick="toggleStatus('${p.id}', 'Sold')"><i class="fas fa-times-circle" style="margin-right: 5px;"></i> Mark Sold</button>`;
 
-                // 🚀 BUG FIX: Use escapeJS to safely handle line-breaks and quotes!
-                // We also remove \r just in case Windows carriage returns try to break it
                 const safeName = escapeJS(p.name).replace(/\r/g, '');
                 const safeDesc = escapeJS(p.description).replace(/\r/g, '');
                 const safeCat = escapeJS(p.category).replace(/\r/g, '');
@@ -375,7 +375,6 @@
         } catch (error) { console.error("Error loading inventory", error); }
     }
 
-    // 🚀 IMAGE COMPRESSION ENGINE
     async function compressImage(file, maxWidth = 1000, quality = 0.7) {
         return new Promise((resolve) => {
             const reader = new FileReader();

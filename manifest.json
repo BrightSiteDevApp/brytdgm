@@ -1,20 +1,20 @@
 {
-  "name": "AFIT Digital Market",
-  "short_name": "AFIT DGM",
-  "description": "The number one marketplace for AFIT students.",
+  "name": "BRYT DGM",
+  "short_name": "BRYT DGM",
+  "description": "The premier digital marketplace for students, powered by BRYT Technologies.",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#020617",
-  "theme_color": "#2d8eff",
+  "background_color": "#0B1220",
+  "theme_color": "#1D5ED0",
   "icons": [
     {
-      "src": "asset/img/app-logo.png",
+      "src": "asset/img/bryt-app-logo.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "asset/img/app-logo2.jpg",
+      "src": "asset/img/bryt-app-logo2.jpg",
       "sizes": "512x512",
       "type": "image/jpg",
       "purpose": "any maskable"

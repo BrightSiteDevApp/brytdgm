@@ -6,26 +6,28 @@
     <title>Customer Requests | Vendor Dashboard</title>
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../asset/style.css">
-    <link rel="icon" href="../asset/img/app-logo.png" type="image/png" sizes="192x192">
+    <link rel="icon" href="../asset/img/bryt-app-logo.png" type="image/png" sizes="192x192">
     <link rel="icon" href="../favicon.ico" type="image/x-icon">
 
     <style>
-        /* 🚀 EXACT AFIT BLUE VARIABLES */
+        /* 🚀 BRYT TECHNOLOGIES VARIABLES */
         :root {
-            --brand-color: #2d8eff; /* AFIT Blue */
-            --brand-hover: #1a73e8;
-            --text-main: #0f172a;
+            --brand-color: #1D5ED0; 
+            --brand-hover: #159FE3;
+            --navy-deep: #071A3A;
+            --text-main: #0B1220;
             --text-muted: #64748b;
         }
 
-        body, html { background: #f8fafc; margin: 0; padding: 0; font-family: 'Poppins', sans-serif;}
+        body, html { background: #F5F8FC; margin: 0; padding: 0; font-family: 'Sora', sans-serif;}
         .app-container { min-height: 100vh; position: relative; }
 
-        /* 🚀 PREMIUM HERO HEADER (Matching Reviews & Account Page) */
+        /* 🚀 PREMIUM HERO HEADER */
         .hero-header {
-            background: linear-gradient(135deg, var(--brand-color), #1e3a8a);
+            background: linear-gradient(135deg, var(--brand-color), var(--navy-deep));
             padding: 20px 20px 30px 20px;
             border-radius: 0 0 30px 30px;
             color: white;
@@ -34,46 +36,46 @@
         .header-top-flex { display: flex; align-items: center; gap: 15px; margin-bottom: 5px; }
         .back-btn { color: white; font-size: 20px; cursor: pointer; background: rgba(255,255,255,0.2); width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: none; backdrop-filter: blur(5px); transition: 0.2s;}
         .back-btn:active { transform: scale(0.9); }
-        .page-title { font-size: 22px; font-weight: 900; margin: 0; color: white; }
+        .page-title { font-size: 22px; font-weight: 800; margin: 0; color: white; letter-spacing: -0.5px;}
         .page-subtitle { font-size: 13px; color: #bae6fd; margin-top: 5px; margin-left: 55px; font-weight: 500; }
         
         #access-denied { display: none; text-align: center; padding: 60px 20px; flex-direction: column; align-items: center; }
         
         #access-denied i { font-size: 60px; color: var(--brand-color); margin-bottom: 20px; }
-        #access-denied h3 { font-size: 18px; color: var(--text-main); margin: 0 0 10px; font-weight: 800; }
-        #access-denied p { font-size: 13px; color: var(--text-muted); margin-bottom: 25px; line-height: 1.5; }
-        .reg-btn { background: var(--brand-color); color: white; padding: 12px 24px; border-radius: 20px; font-weight: 800; font-size: 14px; text-decoration: none; transition: 0.2s; box-shadow: 0 4px 15px rgba(45, 142, 255, 0.3); }
+        #access-denied h3 { font-size: 18px; color: var(--text-main); margin: 0 0 10px; font-weight: 800; letter-spacing: -0.3px;}
+        #access-denied p { font-size: 13px; color: var(--text-muted); margin-bottom: 25px; line-height: 1.5; font-weight: 500;}
+        .reg-btn { background: var(--brand-color); color: white; padding: 14px 24px; border-radius: 20px; font-weight: 800; font-size: 14px; text-decoration: none; transition: 0.2s; box-shadow: 0 4px 15px rgba(29, 94, 208, 0.3); }
         .reg-btn:active { transform: scale(0.95); }
 
         .req-feed { padding: 20px; }
-        .req-card { background: white; border-radius: 16px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #f1f5f9; margin-bottom: 15px; }
+        .req-card { background: white; border-radius: 16px; padding: 20px; box-shadow: 0 4px 15px rgba(11, 18, 32, 0.03); border: 1px solid #e2e8f0; margin-bottom: 15px; }
         
         .req-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
         .req-title { font-size: 16px; font-weight: 800; color: var(--text-main); line-height: 1.3; }
-        .req-budget { font-size: 15px; font-weight: 900; color: #10b981; background: #ecfdf5; padding: 5px 10px; border-radius: 8px; white-space: nowrap; margin-left: 10px; }
+        .req-budget { font-size: 15px; font-weight: 800; color: #10b981; background: #ecfdf5; padding: 5px 10px; border-radius: 8px; white-space: nowrap; margin-left: 10px; border: 1px solid #d1fae5;}
         
-        .req-cat { display: inline-block; font-size: 10px; font-weight: 800; color: var(--brand-color); background: rgba(45, 142, 255, 0.1); padding: 4px 8px; border-radius: 6px; text-transform: uppercase; margin-bottom: 10px; }
+        .req-cat { display: inline-block; font-size: 10px; font-weight: 800; color: var(--brand-color); background: rgba(29, 94, 208, 0.1); padding: 4px 8px; border-radius: 6px; text-transform: uppercase; margin-bottom: 10px; }
         
         .req-desc { 
             font-size: 13px; color: #475569; line-height: 1.6; margin-bottom: 15px; 
-            background: #f8fafc; padding: 10px; border-radius: 8px; border-left: 3px solid var(--brand-color); 
-            max-height: 100px; overflow-y: auto; word-break: break-word; 
+            background: #F5F8FC; padding: 12px; border-radius: 8px; border-left: 3px solid var(--brand-color); 
+            max-height: 100px; overflow-y: auto; word-break: break-word; font-weight: 500;
         }
         
         /* IMAGE STYLES */
         .req-img { width: 100%; height: 160px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; cursor: pointer; border: 1px solid #e2e8f0; transition: 0.2s; }
         .req-img:active { opacity: 0.8; }
 
-        .req-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f1f5f9; padding-top: 15px; }
+        .req-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e2e8f0; padding-top: 15px; }
         .customer-info { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--text-muted); }
         
-        .wa-btn { background: #25D366; color: white; border: none; padding: 10px 16px; border-radius: 10px; font-size: 13px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: 0.2s; text-decoration: none; }
-        .wa-btn:active { transform: scale(0.95); }
-        .wa-btn.disabled { background: #cbd5e1; cursor: not-allowed; }
+        .wa-btn { background: #25D366; color: white; border: none; padding: 10px 16px; border-radius: 10px; font-size: 13px; font-family: 'Sora', sans-serif; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: 0.2s; text-decoration: none; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.2);}
+        .wa-btn:active { transform: scale(0.95); box-shadow: none;}
+        .wa-btn.disabled { background: #cbd5e1; cursor: not-allowed; box-shadow: none;}
 
         .sk-shimmer { background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
         @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-        .sk-card { background: white; border-radius: 16px; padding: 20px; border: 1px solid #f1f5f9; margin-bottom: 15px; }
+        .sk-card { background: white; border-radius: 16px; padding: 20px; border: 1px solid #e2e8f0; margin-bottom: 15px; }
         .sk-line-1 { width: 40%; height: 20px; border-radius: 4px; margin-bottom: 15px; }
         .sk-line-2 { width: 100%; height: 60px; border-radius: 8px; margin-bottom: 15px; }
         .sk-line-3 { width: 100%; height: 40px; border-radius: 8px; }
@@ -81,41 +83,40 @@
         /* FULLSCREEN IMAGE MODAL */
         .img-modal { 
             display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; 
-            background-color: rgba(0,0,0,0.9); flex-direction: column; justify-content: center; align-items: center; 
+            background-color: rgba(11, 18, 32, 0.95); flex-direction: column; justify-content: center; align-items: center; 
         }
         .img-modal img { max-width: 90%; max-height: 85vh; border-radius: 12px; object-fit: contain; }
         .close-modal { position: absolute; top: 20px; right: 20px; color: white; font-size: 35px; cursor: pointer; font-weight: bold; background: rgba(0,0,0,0.5); border-radius: 50%; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center; }
 
         /* ========================================= */
-        /* 🌙 DARK MODE FIXES FOR VIEW REQUESTS      */
+        /* 🌙 DARK MODE FIXES (BRYT NAVY THEME)      */
         /* ========================================= */
-        body.dark-mode { background-color: #020617 !important; }
-        body.dark-mode .app-container { background: #0f172a !important; }
+        body.dark-mode { background-color: #071A3A !important; }
+        body.dark-mode .app-container { background: #0B1220 !important; }
         
-        body.dark-mode .hero-header { background: linear-gradient(135deg, #1e3a8a, #0f172a) !important; box-shadow: 0 4px 15px rgba(0,0,0,0.5) !important;}
+        body.dark-mode .hero-header { background: linear-gradient(135deg, var(--brand-color), var(--navy-deep)) !important; box-shadow: 0 4px 15px rgba(0,0,0,0.5) !important;}
         body.dark-mode .back-btn { background: rgba(255,255,255,0.1) !important; }
         body.dark-mode .page-title { color: #f1f5f9 !important; }
         
         body.dark-mode #access-denied h3 { color: #f1f5f9 !important; }
         body.dark-mode #access-denied p { color: #94a3b8 !important; }
 
-        body.dark-mode .req-card { background: #1e293b !important; border-color: #334155 !important; }
+        body.dark-mode .req-card { background: #071A3A !important; border-color: #1a2c4d !important; box-shadow: none !important;}
         body.dark-mode .req-title { color: #f1f5f9 !important; }
         
-        body.dark-mode .req-budget { background: rgba(16, 185, 129, 0.1) !important; color: #34d399 !important; }
-        body.dark-mode .req-cat { background: rgba(45, 142, 255, 0.1) !important; color: var(--brand-color) !important; }
+        body.dark-mode .req-budget { background: rgba(16, 185, 129, 0.1) !important; color: #34d399 !important; border-color: #065f46 !important;}
+        body.dark-mode .req-cat { background: rgba(29, 94, 208, 0.15) !important; color: var(--brand-hover) !important; }
         
-        body.dark-mode .req-desc { background: #0f172a !important; color: #cbd5e1 !important; border-left-color: var(--brand-color) !important; }
-        body.dark-mode .req-img { border-color: #334155 !important; }
+        body.dark-mode .req-desc { background: #0B1220 !important; color: #cbd5e1 !important; border-left-color: var(--brand-color) !important; }
+        body.dark-mode .req-img { border-color: #1a2c4d !important; }
         
-        body.dark-mode .req-footer { border-top-color: #334155 !important; }
+        body.dark-mode .req-footer { border-top-color: #1a2c4d !important; }
         body.dark-mode .customer-info .fa-user-circle { color: #475569 !important; }
         
-        body.dark-mode .wa-btn.disabled { background: #334155 !important; color: #94a3b8 !important; }
+        body.dark-mode .wa-btn.disabled { background: #1a2c4d !important; color: #94a3b8 !important; }
         
-        body.dark-mode .sk-card { background: #1e293b !important; border-color: #334155 !important; }
-        body.dark-mode .img-modal { background-color: rgba(0,0,0,0.95) !important; }
-        body.dark-mode .sk-shimmer { background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%) !important; background-size: 200% 100% !important; }
+        body.dark-mode .sk-card { background: #071A3A !important; border-color: #1a2c4d !important; }
+        body.dark-mode .sk-shimmer { background: linear-gradient(90deg, #071A3A 25%, #0B1220 50%, #071A3A 75%) !important; background-size: 200% 100% !important; }
     </style>
 </head>
 <body>
@@ -236,7 +237,7 @@
                         <div style="text-align:center; padding: 40px 20px;">
                             <i class="fas fa-box-open" style="font-size:40px; color:var(--text-muted); margin-bottom:15px;"></i>
                             <h3 style="color:var(--text-main); margin:0 0 5px; font-weight:800;">No Requests Yet</h3>
-                            <p style="color:var(--text-muted); font-size:13px;">Customers haven't posted any active requests right now. Check back later!</p>
+                            <p style="color:var(--text-muted); font-size:13px; font-weight:500;">Customers haven't posted any active requests right now. Check back later!</p>
                         </div>
                     `;
                     return;
@@ -273,7 +274,7 @@
                     if (rawPhone) {
                         const cleanPhone = formatPhoneNumber(rawPhone);
                         // We do NOT use escapeHTML here because URLs need actual characters (like '&' and ''' ), not HTML entities
-                        const prefilledMessage = encodeURIComponent(`Hi ${customerName}, I am a vendor on AFIT Digital Market. I saw your request for '${req.product_name}' (Budget: ${fPrice}) and I can fulfill it!`);
+                        const prefilledMessage = encodeURIComponent(`Hi ${customerName}, I am a vendor on BRYT DGM. I saw your request for '${req.product_name}' (Budget: ${fPrice}) and I can fulfill it!`);
                         const waLink = `https://wa.me/${cleanPhone}?text=${prefilledMessage}`;
                         
                         waButtonHTML = `<a href="${waLink}" target="_blank" class="wa-btn"><i class="fab fa-whatsapp" style="font-size:16px;"></i> Contact Buyer</a>`;
@@ -299,7 +300,7 @@
                                 <div class="customer-info">
                                     <i class="fas fa-user-circle" style="font-size:24px;"></i>
                                     <div>
-                                        <div style="color:var(--text-main); font-weight:700;">${escapeHTML(customerName)}</div>
+                                        <div style="color:var(--text-main); font-weight:800;">${escapeHTML(customerName)}</div>
                                         <div style="font-size:10px; font-weight:normal; color:var(--text-muted);">Posted ${timeAgo}</div>
                                     </div>
                                 </div>

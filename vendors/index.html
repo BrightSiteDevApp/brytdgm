@@ -7,12 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>Verified Sellers & Vendors | AFIT Digital Market</title>
-    <meta name="description" content="Discover verified student vendors and businesses on the AFIT Digital Market. Shop safely from trusted campus entrepreneurs for food, fashion, gadgets, and services.">
-    <meta name="keywords" content="AFIT vendors, student sellers AFIT, verified businesses Kaduna, campus entrepreneurs, AFIT Digital Market stores, ADM sellers, student startups">
-    <meta name="author" content="BrightSiteDev">
+    <title>Verified Sellers & Vendors | BRYT DGM</title>
+    <meta name="description" content="Discover verified student vendors and businesses on BRYT DGM. Shop safely from trusted campus entrepreneurs for food, fashion, gadgets, and services.">
+    <meta name="keywords" content="student sellers, verified businesses Kaduna, campus entrepreneurs, BRYT DGM stores, student startups">
+    <meta name="author" content="BRYT Technologies">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
-    <link rel="canonical" href="https://afitdgm.store/vendors/">
+    <link rel="canonical" href="https://brytdgm.name.ng/vendors/">
 
     <meta name="geo.region" content="NG-KD"> 
     <meta name="geo.placename" content="Kaduna">
@@ -20,45 +20,47 @@
     <meta name="ICBM" content="10.5105, 7.4165">
 
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="AFIT Digital Market">
+    <meta property="og:site_name" content="BRYT DGM">
     <meta property="og:locale" content="en_NG">
-    <meta property="og:url" content="https://afitdgm.store/vendors/">
-    <meta property="og:title" content="Verified Vendors | AFIT Digital Market">
-    <meta property="og:description" content="Browse the official directory of verified student businesses on the AFIT campus. Support student entrepreneurs today!">
-    <meta property="og:image" content="https://afitdgm.store/asset/img/app-logo.png">
+    <meta property="og:url" content="https://brytdgm.name.ng/vendors/">
+    <meta property="og:title" content="Verified Vendors | BRYT DGM">
+    <meta property="og:description" content="Browse the official directory of verified student businesses on the campus. Support student entrepreneurs today!">
+    <meta property="og:image" content="https://brytdgm.name.ng/asset/img/bryt-app-logo.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@brightsitedev"> 
-    <meta name="twitter:title" content="AFIT Campus Vendors">
-    <meta name="twitter:description" content="Explore the official registry of verified sellers and student businesses on ADM.">
-    <meta name="twitter:image" content="https://afitdgm.store/asset/img/app-logo.png">
+    <meta name="twitter:site" content="@bryttechnologies"> 
+    <meta name="twitter:title" content="Verified Campus Vendors">
+    <meta name="twitter:description" content="Explore the official registry of verified sellers and student businesses on BRYT DGM.">
+    <meta name="twitter:image" content="https://brytdgm.name.ng/asset/img/bryt-app-logo.png">
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../asset/style.css">
-    <link rel="icon" href="../asset/img/app-logo.png" type="image/png" sizes="192x192">
+    <link rel="icon" href="../asset/img/bryt-app-logo.png" type="image/png" sizes="192x192">
     <link rel="icon" href="../favicon.ico" type="image/x-icon">
 
     <style>
-        /* 🚀 EXACT AFIT BLUE VARIABLES */
+        /* 🚀 BRYT TECHNOLOGIES VARIABLES */
         :root {
-            --brand-color: #2d8eff; /* AFIT Blue */
-            --brand-hover: #1a73e8;
-            --text-main: #0f172a; /* Black/Dark Slate */
+            --brand-color: #1D5ED0; 
+            --brand-hover: #159FE3;
+            --navy-deep: #071A3A;
+            --text-main: #0B1220;
             --text-muted: #64748b;
             --bg-card: #ffffff;
             --border-color: #e2e8f0;
-            --shadow-sm: 0 4px 15px rgba(0,0,0,0.03);
+            --shadow-sm: 0 4px 15px rgba(11, 18, 32, 0.03);
         }
 
-        body, html { background: #f8fafc; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+        body, html { background: #F5F8FC; margin: 0; padding: 0; font-family: 'Sora', sans-serif; }
         .app-container { padding-bottom: 90px; min-height: 100vh; }
 
         /* 🚀 NEW HERO HEADER */
         .hero-header {
-            background: linear-gradient(135deg, var(--brand-color), #1e3a8a);
+            background: linear-gradient(135deg, var(--brand-color), var(--navy-deep));
             padding: 20px 20px 45px 20px;
             border-radius: 0 0 30px 30px;
             color: white;
@@ -67,18 +69,18 @@
         .header-top-flex { display: flex; align-items: center; gap: 15px; margin-bottom: 5px; }
         .back-btn { color: white; font-size: 20px; cursor: pointer; background: rgba(255,255,255,0.2); width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: none; backdrop-filter: blur(5px); transition: 0.2s;}
         .back-btn:active { transform: scale(0.9); }
-        .page-title { font-size: 22px; font-weight: 900; margin: 0; }
+        .page-title { font-size: 22px; font-weight: 800; margin: 0; letter-spacing: -0.3px;}
         .page-subtitle { font-size: 13px; color: #bae6fd; margin-top: 5px; margin-left: 55px; font-weight: 500; }
 
         /* 🚀 FLOATING SEARCH BAR */
         .search-container { 
             background: white; border-radius: 16px; display: flex; align-items: center; 
             padding: 14px 18px; margin: -25px 20px 20px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08); border: 2px solid white; 
+            box-shadow: 0 10px 25px rgba(11, 18, 32, 0.08); border: 2px solid white; 
             transition: 0.2s; position: relative; z-index: 10;
         }
-        .search-container:focus-within { border-color: var(--brand-color); box-shadow: 0 10px 25px rgba(45, 142, 255, 0.2); }
-        .search-container input[type="search"] { border: none; background: transparent; outline: none; width: 100%; font-size: 14px; color: var(--text-main); font-weight: 500; -webkit-appearance: none;}
+        .search-container:focus-within { border-color: var(--brand-color); box-shadow: 0 10px 25px rgba(29, 94, 208, 0.2); }
+        .search-container input[type="search"] { border: none; background: transparent; outline: none; width: 100%; font-size: 14px; font-family: 'Sora', sans-serif; color: var(--text-main); font-weight: 500; -webkit-appearance: none;}
         .search-icon { color: var(--brand-color); font-size: 18px; margin-right: 12px; }
         
         /* 🚀 2x2 Grid Layout for Vendors */
@@ -87,24 +89,24 @@
         /* 🚀 PREMIUM VENDOR CARDS */
         .vendor-card {
             background: white; border-radius: 20px; padding: 20px 10px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.03); border: 1px solid #f1f5f9;
+            box-shadow: 0 6px 20px rgba(11, 18, 32, 0.03); border: 1px solid #e2e8f0;
             display: flex; flex-direction: column; align-items: center; text-align: center;
             cursor: pointer; transition: 0.2s; height: 100%; justify-content: center;
             width: 100%; min-width: 0; box-sizing: border-box; overflow: hidden; position: relative;
         }
-        .vendor-card:active { transform: scale(0.96); box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+        .vendor-card:active { transform: scale(0.96); box-shadow: 0 2px 10px rgba(11, 18, 32, 0.02); }
         
         .vendor-logo {
             width: 70px; height: 70px; border-radius: 50%; object-fit: cover;
-            border: 3px solid #f8fafc; flex-shrink: 0; margin-bottom: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05); background: #eee;
+            border: 3px solid #F5F8FC; flex-shrink: 0; margin-bottom: 12px;
+            box-shadow: 0 4px 10px rgba(11, 18, 32, 0.05); background: #eee;
         }
         
         .vendor-info-wrapper { width: 100%; min-width: 0; }
         
         /* Black Name styling */
         .vendor-name { 
-            font-size: 13px; font-weight: 900; color: var(--text-main); margin-bottom: 4px; 
+            font-size: 13px; font-weight: 800; color: var(--text-main); margin-bottom: 4px; 
             display: flex; align-items: center; justify-content: center;
             width: 100%; text-transform: uppercase; line-height: 1.2;
         }
@@ -137,28 +139,28 @@
         .end-message i { font-size: 30px; color: #cbd5e1; margin-bottom: 10px; display: block; }
 
         /* ========================================= */
-        /* 🌙 DARK MODE FIXES FOR VENDORS PAGE       */
+        /* 🌙 DARK MODE FIXES (BRYT NAVY THEME)      */
         /* ========================================= */
-        body.dark-mode { background-color: #020617 !important; }
-        body.dark-mode .app-container { background: #0f172a !important; }
+        body.dark-mode { background-color: #071A3A !important; }
+        body.dark-mode .app-container { background: #0B1220 !important; }
         
-        body.dark-mode .hero-header { background: linear-gradient(135deg, #1e3a8a, #0f172a) !important; box-shadow: 0 4px 15px rgba(0,0,0,0.5) !important;}
+        body.dark-mode .hero-header { background: linear-gradient(135deg, var(--brand-color), var(--navy-deep)) !important; box-shadow: 0 4px 15px rgba(0,0,0,0.5) !important;}
         body.dark-mode .back-btn { background: rgba(255,255,255,0.1) !important; }
         body.dark-mode .page-title { color: #f1f5f9 !important; }
         
-        body.dark-mode .search-container { background: #1e293b !important; border-color: #334155 !important; box-shadow: 0 10px 25px rgba(0,0,0,0.5) !important; }
+        body.dark-mode .search-container { background: #071A3A !important; border-color: #1a2c4d !important; box-shadow: 0 10px 25px rgba(0,0,0,0.5) !important; }
         body.dark-mode .search-container input { color: #f1f5f9 !important; }
         body.dark-mode .search-icon { color: var(--brand-color) !important; }
 
-        body.dark-mode .vendor-card { background: #1e293b !important; border-color: #334155 !important; box-shadow: none !important;}
-        body.dark-mode .vendor-logo { border-color: #0f172a !important; background: #0f172a !important; }
+        body.dark-mode .vendor-card { background: #071A3A !important; border-color: #1a2c4d !important; box-shadow: none !important;}
+        body.dark-mode .vendor-logo { border-color: #1a2c4d !important; background: #0B1220 !important; }
         body.dark-mode .vendor-name { color: #f1f5f9 !important; }
         body.dark-mode .vendor-desc { color: #94a3b8 !important; }
 
-        body.dark-mode .sk-card { background: #1e293b !important; border-color: #334155 !important; }
+        body.dark-mode .sk-card { background: #071A3A !important; border-color: #1a2c4d !important; }
         body.dark-mode .end-message { color: #94a3b8 !important; }
         body.dark-mode .end-message i { color: #334155 !important; }
-        body.dark-mode .sk-shimmer { background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%) !important; background-size: 200% 100% !important; }
+        body.dark-mode .sk-shimmer { background: linear-gradient(90deg, #071A3A 25%, #0B1220 50%, #071A3A 75%) !important; background-size: 200% 100% !important; }
         
         body.dark-mode .nav-fab { background: var(--brand-color) !important; border: none !important; color: white !important; }
     </style>
@@ -216,7 +218,7 @@
                 <span class="red-dot msg-dot"></span>
                 <span>Messages</span>
             </a>
-            <div class="nav-fab" onclick="requireLogin('../add-product/index.html')" style="background: var(--brand-color); color: white; border: none; box-shadow: 0 4px 15px rgba(45, 142, 255, 0.4);"><i class="fas fa-plus"></i></div>
+            <div class="nav-fab" onclick="requireLogin('../add-product/index.html')" style="background: var(--brand-color); color: white; border: none; box-shadow: 0 4px 15px rgba(29, 94, 208, 0.4);"><i class="fas fa-plus"></i></div>
             <a href="#" class="nav-item" onclick="requireLogin('../saved/index.html')"><i class="fas fa-heart"></i><span>Saved</span></a>
             <a href="#" class="nav-item" onclick="requireLogin('../account/index.html')"><i class="fas fa-user"></i><span>Account</span></a>
         </div>
@@ -280,7 +282,6 @@
             }
         }
 
-        // 🚀 REFACTORED TO REMOVE NESTED BACKTICKS FOR VS CODE
         function loadNextBatch() {
             if (isFetchingBatch) return;
 
@@ -292,7 +293,7 @@
                 grid.innerHTML = 
                     '<div style="grid-column: span 2; text-align: center; padding: 60px 20px; color: #94a3b8;">' +
                         '<i class="fas fa-store-slash" style="font-size: 50px; margin-bottom: 15px; color: #cbd5e1;"></i>' +
-                        '<h3 style="font-size: 16px; color: #1e293b; margin: 0 0 5px;">No vendor found</h3>' +
+                        '<h3 style="font-size: 16px; color: var(--text-main); margin: 0 0 5px;">No vendor found</h3>' +
                         '<p style="font-size: 13px;">Try adjusting your search terms.</p>' +
                     '</div>';
                 endMsg.style.display = 'none';
@@ -318,7 +319,7 @@
 
                     let badgeColor = "var(--brand-color)"; 
                     if (v.subscription_plan === "Influencer") badgeColor = "#fbbf24"; 
-                    if (v.subscription_plan === "Icon") badgeColor = "#1e293b"; 
+                    if (v.subscription_plan === "Icon") badgeColor = "#1a2c4d"; 
 
                     // The Pin Badge
                     const pinBadge = v.is_pinned ? '<div class="pin-badge"><i class="fas fa-thumbtack"></i> Featured</div>' : '';

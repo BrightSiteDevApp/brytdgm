@@ -62,6 +62,9 @@ async function requireLogin(targetUrl) {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+    // 🚀 Auto-update copyright year
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
     setupSearch();
     setupExpandableFooter(); 
     checkGlobalBadges();
@@ -432,7 +435,7 @@ window.downloadApp = async function() {
         if (iosPopup) {
             iosPopup.classList.remove('hidden');
         } else {
-            alert("To install Market on iOS:\n\n1. Tap the 'Share' icon at the bottom of Safari.\n2. Scroll down and tap 'Add to Home Screen'.");
+            alert("To install BRYT DGM on iOS:\n\n1. Tap the 'Share' icon at the bottom of Safari.\n2. Scroll down and tap 'Add to Home Screen'.");
         }
     } else if (deferredPrompt) {
         deferredPrompt.prompt();

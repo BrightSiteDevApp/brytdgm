@@ -7,31 +7,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>All Items & Services | AFIT Digital Market</title>
-    <meta name="description" content="Browse hundreds of products and services on AFIT Digital Market. Shop for gadgets, fashion, food, and more directly from verified AFIT student vendors.">
-    <link rel="canonical" href="https://afitdgm.store/items/">
+    <title>All Items & Services | BRYT DGM</title>
+    <meta name="description" content="Browse hundreds of products and services on BRYT DGM. Shop for gadgets, fashion, food, and more directly from verified student vendors in the AFIT community.">
+    <link rel="canonical" href="https://brytdgm.name.ng/items/">
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../asset/style.css">
-    <link rel="icon" href="../asset/img/app-logo.png" type="image/png" sizes="192x192">
+    <link rel="icon" href="../asset/img/bryt-app-logo.png" type="image/png" sizes="192x192">
     <link rel="icon" href="../favicon.ico" type="image/x-icon">
 
     <style>
-        /* 🚀 PRECISE AFIT BLUE SYSTEM */
+        /* 🚀 BRYT TECHNOLOGIES VARIABLES */
         :root {
-            --brand-color: #2d8eff; /* AFIT Blue */
-            --brand-hover: #1a73e8;
-            --text-main: #0f172a;
+            --brand-color: #1D5ED0; 
+            --brand-hover: #159FE3;
+            --navy-deep: #071A3A;
+            --text-main: #0B1220;
             --text-muted: #64748b;
         }
 
-        body, html { background: #f8fafc; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+        body, html { background: #F5F8FC; margin: 0; padding: 0; font-family: 'Sora', sans-serif; }
         .app-container { padding-bottom: 90px; min-height: 100vh; }
         
         /* 🚀 NEW HERO HEADER */
         .hero-header {
-            background: linear-gradient(135deg, var(--brand-color), #1e3a8a);
+            background: linear-gradient(135deg, var(--brand-color), var(--navy-deep));
             padding: 20px 20px 45px 20px;
             border-radius: 0 0 30px 30px;
             color: white;
@@ -40,18 +42,18 @@
         .header-top-flex { display: flex; align-items: center; gap: 15px; margin-bottom: 5px; }
         .back-btn { color: white; font-size: 20px; cursor: pointer; background: rgba(255,255,255,0.2); width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: none; backdrop-filter: blur(5px); transition: 0.2s;}
         .back-btn:active { transform: scale(0.9); }
-        .page-title { font-size: 22px; font-weight: 900; margin: 0; }
+        .page-title { font-size: 22px; font-weight: 800; margin: 0; letter-spacing: -0.3px;}
         .page-subtitle { font-size: 13px; color: #bae6fd; margin-top: 5px; margin-left: 55px; font-weight: 500; }
 
         /* 🚀 FLOATING SEARCH BAR */
         .search-container { 
             background: white; border-radius: 16px; display: flex; align-items: center; 
             padding: 14px 18px; margin: -25px 20px 15px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08); border: 2px solid white; 
+            box-shadow: 0 10px 25px rgba(11, 18, 32, 0.08); border: 2px solid white; 
             transition: 0.2s; position: relative; z-index: 10;
         }
-        .search-container:focus-within { border-color: var(--brand-color); box-shadow: 0 10px 25px rgba(45, 142, 255, 0.2); }
-        .search-container input[type="search"] { border: none; background: transparent; outline: none; width: 100%; font-size: 14px; color: var(--text-main); font-weight: 500;}
+        .search-container:focus-within { border-color: var(--brand-color); box-shadow: 0 10px 25px rgba(29, 94, 208, 0.2); }
+        .search-container input[type="search"] { border: none; background: transparent; outline: none; width: 100%; font-size: 14px; font-family: 'Sora', sans-serif; color: var(--text-main); font-weight: 500;}
         .search-icon { color: var(--brand-color); font-size: 18px; margin-right: 12px; }
         
         /* 🚀 MODERN CATEGORY PILLS */
@@ -61,35 +63,35 @@
         .filter-pill { 
             background: white; border: 1px solid #e2e8f0; padding: 10px 18px; border-radius: 14px; 
             font-size: 13px; font-weight: 700; color: var(--text-muted); cursor: pointer; 
-            white-space: nowrap; transition: 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            white-space: nowrap; transition: 0.2s; box-shadow: 0 2px 8px rgba(11, 18, 32, 0.02);
         }
         .filter-pill.active { 
             background: var(--brand-color); color: white; border-color: var(--brand-color); 
-            box-shadow: 0 6px 15px rgba(45, 142, 255, 0.3); transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(29, 94, 208, 0.3); transform: translateY(-2px);
         }
 
         /* 🚀 PREMIUM EDGE-TO-EDGE PRODUCT CARDS */
         .items-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 20px; }
 
         .product-card { 
-            background: white; border-radius: 20px; padding: 0; box-shadow: 0 6px 20px rgba(0,0,0,0.04); 
+            background: white; border-radius: 20px; padding: 0; box-shadow: 0 6px 20px rgba(11, 18, 32, 0.04); 
             cursor: pointer; border: 1px solid #f1f5f9; position: relative; transition: 0.2s; 
             width: 100%; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column;
         }
-        .product-card:active { transform: scale(0.96); box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+        .product-card:active { transform: scale(0.96); box-shadow: 0 2px 10px rgba(11, 18, 32, 0.02); }
         
-        .product-img-wrap { position: relative; width: 100%; height: 160px; background: #f8fafc; }
+        .product-img-wrap { position: relative; width: 100%; height: 160px; background: #F5F8FC; }
         .product-img { width: 100%; height: 100%; object-fit: cover; }
         
         /* Floating Price Badge */
         .product-price-badge { 
             position: absolute; bottom: 10px; right: 10px; background: rgba(255,255,255,0.95); 
-            color: var(--brand-color); font-size: 14px; font-weight: 900; padding: 6px 12px; 
-            border-radius: 12px; backdrop-filter: blur(5px); box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            color: var(--brand-color); font-size: 14px; font-weight: 800; padding: 6px 12px; 
+            border-radius: 12px; backdrop-filter: blur(5px); box-shadow: 0 4px 10px rgba(11, 18, 32, 0.1);
         }
         
-        .multi-img-badge { position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.6); color: white; font-size: 10px; padding: 5px 8px; border-radius: 8px; font-weight: bold; backdrop-filter: blur(4px); }
-        .pin-badge { position: absolute; top: 12px; left: 12px; background: #facc15; color: #854d0e; font-size: 10px; padding: 4px 10px; border-radius: 8px; font-weight: 900; z-index: 5; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .multi-img-badge { position: absolute; top: 12px; right: 12px; background: rgba(11, 18, 32, 0.6); color: white; font-size: 10px; padding: 5px 8px; border-radius: 8px; font-weight: bold; backdrop-filter: blur(4px); }
+        .pin-badge { position: absolute; top: 12px; left: 12px; background: #facc15; color: #854d0e; font-size: 10px; padding: 4px 10px; border-radius: 8px; font-weight: 800; z-index: 5; box-shadow: 0 4px 10px rgba(11, 18, 32, 0.1); }
 
         .product-info { padding: 15px 12px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;}
         .product-title { font-size: 13px; font-weight: 800; color: var(--text-main); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 8px;}
@@ -109,34 +111,39 @@
         .end-message i { font-size: 30px; color: #cbd5e1; margin-bottom: 10px; display: block; }
 
         /* ========================================= */
-        /* 🌙 DARK MODE FIXES                        */
+        /* 🌙 DARK MODE FIXES (BRYT NAVY)            */
         /* ========================================= */
-        body.dark-mode { background-color: #020617 !important; }
-        body.dark-mode .app-container { background: #0f172a !important; }
+        body.dark-mode { background-color: #071A3A !important; }
+        body.dark-mode .app-container { background: #0B1220 !important; }
         
-        body.dark-mode .hero-header { background: linear-gradient(135deg, #1e3a8a, #0f172a) !important; }
+        body.dark-mode .hero-header { background: linear-gradient(135deg, var(--brand-color), var(--navy-deep)) !important; }
         body.dark-mode .back-btn { background: rgba(255,255,255,0.1) !important; }
         
-        body.dark-mode .search-container { background: #1e293b !important; border-color: #334155 !important; box-shadow: 0 10px 25px rgba(0,0,0,0.5) !important; }
+        body.dark-mode .search-container { background: #071A3A !important; border-color: #1a2c4d !important; box-shadow: 0 10px 25px rgba(0,0,0,0.5) !important; }
         body.dark-mode .search-container input { color: #f1f5f9 !important; }
         body.dark-mode .search-icon { color: var(--brand-color) !important; }
         
-        body.dark-mode .filter-pill { background: #1e293b !important; border-color: #334155 !important; color: #94a3b8 !important; }
+        body.dark-mode .filter-pill { background: #071A3A !important; border-color: #1a2c4d !important; color: #94a3b8 !important; }
         body.dark-mode .filter-pill.active { background: var(--brand-color) !important; color: white !important; border-color: var(--brand-color) !important; }
         
-        body.dark-mode .product-card { background: #1e293b !important; border-color: #334155 !important; box-shadow: none !important;}
+        body.dark-mode .product-card { background: #071A3A !important; border-color: #1a2c4d !important; box-shadow: none !important;}
         body.dark-mode .product-title { color: #f1f5f9 !important; }
-        body.dark-mode .product-img-wrap { background: #0f172a !important; }
-        body.dark-mode .product-price-badge { background: rgba(15, 23, 42, 0.95) !important; color: #60a5fa !important; border: 1px solid #334155; }
+        body.dark-mode .product-img-wrap { background: #0B1220 !important; }
+        body.dark-mode .product-price-badge { background: rgba(11, 18, 32, 0.95) !important; color: #60a5fa !important; border: 1px solid #1a2c4d; }
         body.dark-mode .product-location { color: #94a3b8 !important; }
         
         body.dark-mode .end-message { color: #94a3b8 !important; }
         body.dark-mode .end-message i { color: #334155 !important; }
-        body.dark-mode .sk-card { background: #1e293b !important; border-color: #334155 !important; }
-        body.dark-mode .sk-shimmer { background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%) !important; }
+        body.dark-mode .sk-card { background: #071A3A !important; border-color: #1a2c4d !important; }
+        body.dark-mode .sk-shimmer { background: linear-gradient(90deg, #071A3A 25%, #0B1220 50%, #071A3A 75%) !important; }
     </style>
 </head>
 <body>
+    <script>
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
 
     <div class="app-container">
         
@@ -236,6 +243,9 @@
         });
 
         async function requireLogin(targetUrl) {
+            if (typeof supabaseClient === 'undefined') {
+                window.location.href = "../login/index.html"; return;
+            }
             const { data: { session } } = await supabaseClient.auth.getSession();
             if (session) window.location.href = targetUrl;
             else window.location.href = "../login/index.html";
@@ -302,11 +312,10 @@
 
             } catch (error) {
                 document.getElementById('skeleton-loader').style.display = 'none';
-                document.getElementById('main-items-grid').innerHTML = `<p style="grid-column:span 2; text-align:center; color:red; padding: 40px;">Failed to load items.</p>`;
+                document.getElementById('main-items-grid').innerHTML = '<p style="grid-column:span 2; text-align:center; color:red; padding: 40px;">Failed to load items.</p>';
             }
         }
 
-        // 🚀 REFACTORED TO FIX VS CODE RED ERRORS AND APPLY NEW UI
         function renderHTMLBatch(startIndex, endIndex) {
             const grid = document.getElementById('main-items-grid');
             const batch = currentDisplayList.slice(startIndex, endIndex);
@@ -317,7 +326,6 @@
                 const fPrice = new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', maximumFractionDigits: 0 }).format(p.price);
                 const pinBadge = p.is_pinned ? '<div class="pin-badge"><i class="fas fa-star"></i> Featured</div>' : '';
 
-                // Using standard concatenation to prevent any VS Code template literal glitches
                 return '<div class="product-card" onclick="window.location.href=\'../product/index.html?id=' + escapeJS(p.id) + '\'">' +
                             '<div class="product-img-wrap">' +
                                 pinBadge +
@@ -343,12 +351,12 @@
             const endMsg = document.getElementById('end-message');
             
             if (currentDisplayList.length === 0) {
-                grid.innerHTML = `
-                    <div style="grid-column: span 2; text-align: center; padding: 60px 20px; color: #94a3b8;">
-                        <i class="fas fa-box-open" style="font-size: 50px; margin-bottom: 15px; color: #cbd5e1;"></i>
-                        <h3 style="font-size: 16px; color: #1e293b; margin: 0 0 5px;">No items found</h3>
-                        <p style="font-size: 13px;">Try adjusting your search, category, or spelling.</p>
-                    </div>`;
+                grid.innerHTML = 
+                    '<div style="grid-column: span 2; text-align: center; padding: 60px 20px; color: #94a3b8;">' +
+                        '<i class="fas fa-box-open" style="font-size: 50px; margin-bottom: 15px; color: #cbd5e1;"></i>' +
+                        '<h3 style="font-size: 16px; color: var(--text-main); margin: 0 0 5px;">No items found</h3>' +
+                        '<p style="font-size: 13px;">Try adjusting your search, category, or spelling.</p>' +
+                    '</div>';
                 endMsg.style.display = 'none';
                 skeleton.style.display = 'none';
                 return;

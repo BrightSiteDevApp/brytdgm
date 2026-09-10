@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-70VSGR5WBW"></script>
+    
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Page Not Found | AFIT Digital Market</title>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" href="asset/img/app-logo.png" type="image/png" sizes="192x192">
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
 
+    <title>Page Not Found | BRYT DGM</title>
     
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="asset/img/bryt-app-logo.png" type="image/png" sizes="192x192">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800;900&display=swap');
-        
         :root {
-            --brand-color: #2d8eff;
-            --bg-color: #f8fafc;
-            --text-main: #1e293b;
+            --brand-color: #1D5ED0; 
+            --brand-hover: #159FE3;
+            --navy-deep: #071A3A;
+            --bg-color: #F5F8FC;
+            --text-main: #0B1220;
             --text-muted: #64748b;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Sora', sans-serif; }
         
         body { 
             background-color: var(--bg-color); 
@@ -29,41 +33,63 @@
         }
 
         .container {
-            background: white; width: 90%; max-width: 400px;
-            padding: 40px 30px; border-radius: 24px; text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
-            border: 1px solid #f1f5f9;
-            animation: popUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            width: 90%; max-width: 420px;
+            padding: 40px 25px; text-align: center;
+            animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        @keyframes popUp {
-            from { transform: translateY(20px) scale(0.95); opacity: 0; }
-            to { transform: translateY(0) scale(1); opacity: 1; }
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .floating-icon {
+            width: 80px; height: 80px; background: white; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 10px 30px rgba(29, 94, 208, 0.15); font-size: 35px; color: var(--brand-color);
+            margin: 0 auto 20px; border: 2px solid #eff6ff;
         }
 
         .error-code {
-            font-size: 80px; font-weight: 900; color: var(--brand-color);
+            font-size: 90px; font-weight: 900; 
+            background: linear-gradient(135deg, var(--brand-color), var(--navy-deep));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             line-height: 1; margin-bottom: 5px;
-            text-shadow: 4px 4px 0px rgba(45, 142, 255, 0.2);
+            text-shadow: 0 10px 30px rgba(29, 94, 208, 0.2);
+            letter-spacing: -3px;
         }
 
-        h1 { font-size: 20px; font-weight: 800; color: var(--text-main); margin-bottom: 10px; }
-        p { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 30px; }
+        h1 { font-size: 22px; font-weight: 800; color: var(--text-main); margin-bottom: 10px; letter-spacing: -0.5px;}
+        p { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 25px; font-weight: 500;}
+
+        .redirect-box {
+            background: #eff6ff; border: 1px solid #bfdbfe; color: var(--navy-deep);
+            padding: 12px 20px; border-radius: 14px; font-size: 13px; font-weight: 800;
+            margin-bottom: 25px; display: inline-flex; align-items: center; gap: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
 
         .home-btn {
             background: var(--brand-color); color: white; border: none; text-decoration: none;
-            width: 100%; padding: 15px; border-radius: 14px; font-size: 15px; font-weight: 800;
-            cursor: pointer; transition: 0.2s; box-shadow: 0 8px 20px rgba(45, 142, 255, 0.3);
+            width: 100%; padding: 16px; border-radius: 16px; font-size: 15px; font-weight: 800;
+            cursor: pointer; transition: 0.2s; box-shadow: 0 8px 25px rgba(29, 94, 208, 0.3);
             display: inline-flex; justify-content: center; align-items: center; gap: 10px;
         }
-        .home-btn:active { transform: scale(0.96); }
+        .home-btn:active { transform: scale(0.96); box-shadow: 0 4px 10px rgba(29, 94, 208, 0.2);}
 
-        /* 🌙 DARK MODE */
-        body.dark-mode { background-color: #020617; }
-        body.dark-mode .container { background: #0f172a; border-color: #334155; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        /* 🌙 DARK MODE (BRYT NAVY THEME) */
+        body.dark-mode { background-color: #071A3A; }
+        body.dark-mode .floating-icon { background: #0B1220; border-color: #1a2c4d; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         body.dark-mode h1 { color: #f1f5f9; }
         body.dark-mode p { color: #94a3b8; }
-        body.dark-mode .error-code { text-shadow: 4px 4px 0px rgba(45, 142, 255, 0.1); }
+        body.dark-mode .redirect-box { background: rgba(29, 94, 208, 0.1); border-color: rgba(29, 94, 208, 0.2); color: #60a5fa; }
     </style>
 </head>
 <body>
@@ -75,14 +101,41 @@
     </script>
 
     <div class="container">
+        <div class="floating-icon">
+            <i class="fas fa-map-signs"></i>
+        </div>
         <div class="error-code">404</div>
         <h1>Lost on Campus?</h1>
-        <p>Oops! It looks like the page or item you are looking for doesn't exist, was moved, or was deleted by the vendor.</p>
+        <p>Oops! The page or item you are looking for doesn't exist, was moved, or was deleted by the vendor.</p>
         
-        <a href="./" class="home-btn">
-            <i class="fas fa-home"></i> Back to Market
+        <!-- Live Countdown UI -->
+        <div class="redirect-box">
+            <i class="fas fa-spinner fa-spin"></i> Redirecting in <span id="countdown">3</span>s...
+        </div>
+        
+        <a href="index.html" class="home-btn">
+            <i class="fas fa-home"></i> Go Back Now
         </a>
     </div>
+
+    <!-- 🚀 AUTO-REDIRECT LOGIC -->
+    <script>
+        let timeLeft = 3;
+        const countdownEl = document.getElementById('countdown');
+        
+        const timer = setInterval(() => {
+            timeLeft--;
+            if (countdownEl) {
+                countdownEl.innerText = timeLeft;
+            }
+            
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                // Redirect to the home page
+                window.location.href = 'index.html';
+            }
+        }, 1000); // 1000ms = 1 second
+    </script>
 
 </body>
 </html>

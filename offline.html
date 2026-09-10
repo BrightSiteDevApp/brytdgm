@@ -3,24 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Offline | AFIT Digital Market</title>
+    <title>Offline | BRYT DGM</title>
     
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" href="asset/img/app-logo.png" type="image/png" sizes="192x192">
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="asset/img/bryt-app-logo.png" type="image/png" sizes="192x192">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800;900&display=swap');
-        
         :root {
-            --brand-color: #2d8eff;
-            --bg-color: #f8fafc;
-            --text-main: #1e293b;
+            --brand-color: #1D5ED0;
+            --bg-color: #F5F8FC;
+            --text-main: #0B1220;
             --text-muted: #64748b;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Sora', sans-serif; }
         
         body { 
             background-color: var(--bg-color); 
@@ -31,8 +30,8 @@
         .container {
             background: white; width: 90%; max-width: 400px;
             padding: 40px 30px; border-radius: 24px; text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
-            border: 1px solid #f1f5f9;
+            box-shadow: 0 10px 40px rgba(11, 18, 32, 0.05);
+            border: 1px solid #e2e8f0;
             animation: popUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -42,26 +41,26 @@
         }
 
         .icon-box {
-            width: 80px; height: 80px; background: #eff6ff; color: var(--brand-color);
+            width: 80px; height: 80px; background: rgba(29, 94, 208, 0.1); color: var(--brand-color);
             border-radius: 50%; display: flex; justify-content: center; align-items: center;
             font-size: 35px; margin: 0 auto 20px;
         }
 
-        h1 { font-size: 22px; font-weight: 900; color: var(--text-main); margin-bottom: 10px; }
-        p { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 30px; }
+        h1 { font-size: 22px; font-weight: 800; color: var(--text-main); margin-bottom: 10px; letter-spacing: -0.5px;}
+        p { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 30px; font-weight: 500;}
 
         .retry-btn {
             background: var(--brand-color); color: white; border: none;
-            width: 100%; padding: 15px; border-radius: 14px; font-size: 15px; font-weight: 800;
-            cursor: pointer; transition: 0.2s; box-shadow: 0 8px 20px rgba(45, 142, 255, 0.3);
+            width: 100%; padding: 15px; border-radius: 14px; font-size: 15px; font-weight: 800; font-family: 'Sora', sans-serif;
+            cursor: pointer; transition: 0.2s; box-shadow: 0 8px 20px rgba(29, 94, 208, 0.3);
             display: flex; justify-content: center; align-items: center; gap: 10px;
         }
-        .retry-btn:active { transform: scale(0.96); }
+        .retry-btn:active { transform: scale(0.96); box-shadow: 0 4px 10px rgba(29, 94, 208, 0.2);}
 
-        /* 🌙 DARK MODE */
-        body.dark-mode { background-color: #020617; }
-        body.dark-mode .container { background: #0f172a; border-color: #334155; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-        body.dark-mode .icon-box { background: #1e293b; }
+        /* 🌙 DARK MODE (BRYT NAVY THEME) */
+        body.dark-mode { background-color: #071A3A; }
+        body.dark-mode .container { background: #0B1220; border-color: #1a2c4d; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        body.dark-mode .icon-box { background: #071A3A; }
         body.dark-mode h1 { color: #f1f5f9; }
         body.dark-mode p { color: #94a3b8; }
     </style>

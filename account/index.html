@@ -3,36 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>My Account | AFIT Digital Market</title>
+    <title>My Account | BRYT DGM</title>
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../asset/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" href="../asset/img/app-logo.png" type="image/png" sizes="192x192">
+    <link rel="icon" href="../asset/img/bryt-app-logo.png" type="image/png" sizes="192x192">
     <link rel="icon" href="../favicon.ico" type="image/x-icon">
 
     <style>
-        /* 🚀 FIX: EXACT AFIT BLUE VARIABLES */
+        /* 🚀 BRYT TECHNOLOGIES VARIABLES */
         :root {
-            --brand-color: #2d8eff; /* AFIT Blue */
-            --brand-hover: #1a73e8;
-            --text-main: #0f172a;
+            --brand-color: #1D5ED0; 
+            --brand-hover: #159FE3;
+            --text-main: #0B1220;
             --text-muted: #64748b;
+            --navy-deep: #071A3A;
         }
+
+        body { font-family: 'Sora', sans-serif; }
 
         .header {
             background: white; padding: 16px 20px;
             display: flex; align-items: center; justify-content: space-between;
             position: sticky; top: 0; z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            box-shadow: 0 2px 10px rgba(11, 18, 32, 0.04);
         }
         .back-btn { color: var(--text-main); text-decoration: none; font-size: 18px; }
-        .header-title { font-weight: 900; font-size: 17px; color: var(--text-main); }
+        .header-title { font-weight: 800; font-size: 17px; color: var(--text-main); }
 
         /* 🚀 REDESIGNED PROFILE CARD */
         .profile-card {
             background: white; border-radius: 24px;
-            margin: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.04);
+            margin: 20px; box-shadow: 0 10px 40px rgba(11, 18, 32, 0.06);
             position: relative; overflow: hidden; border: 1px solid #f1f5f9;
         }
         
@@ -49,7 +53,7 @@
         }
         .profile-img {
             width: 110px; height: 110px; border-radius: 50%; object-fit: cover;
-            border: 5px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); background: #eee;
+            border: 5px solid white; box-shadow: 0 5px 15px rgba(11, 18, 32, 0.1); background: #f5f8fc;
         }
         .edit-badge {
             position: absolute; bottom: 0; right: 0;
@@ -60,11 +64,11 @@
         }
         .avatar-container:active .edit-badge { transform: scale(0.9); }
         
-        .profile-name { font-size: 22px; font-weight: 900; color: var(--text-main); margin: 0 0 5px; }
-        .profile-email { font-size: 14px; font-weight: 600; color: var(--text-muted); margin: 0; }
+        .profile-name { font-size: 20px; font-weight: 800; color: var(--text-main); margin: 0 0 5px; letter-spacing: -0.3px;}
+        .profile-email { font-size: 13px; font-weight: 600; color: var(--text-muted); margin: 0; }
         
         .user-badge {
-            background: #f1f5f9; color: #475569; font-size: 12px; font-weight: 800;
+            background: #f1f5f9; color: #475569; font-size: 11px; font-weight: 700;
             padding: 6px 16px; border-radius: 8px; display: inline-block; margin-top: 15px;
         }
         .user-badge.vendor {
@@ -72,19 +76,19 @@
         }
 
         .menu-wrapper { padding: 0 20px 30px; }
-        .menu-title { font-size: 13px; font-weight: 900; color: var(--text-main); margin: 25px 0 12px 5px; }
+        .menu-title { font-size: 12px; font-weight: 800; color: var(--text-main); margin: 25px 0 12px 5px; text-transform: uppercase; letter-spacing: 0.5px;}
         
         .menu-btn {
             display: flex; align-items: center; background: white; padding: 18px 20px;
             border-radius: 16px; margin-bottom: 12px; text-decoration: none; color: var(--text-main);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.02); transition: 0.2s; border: 1px solid #f1f5f9; width: 100%; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(11, 18, 32, 0.02); transition: 0.2s; border: 1px solid #f1f5f9; width: 100%; cursor: pointer;
         }
         .menu-btn:active { transform: scale(0.98); background: #f8fafc; }
         
         .menu-icon {
             font-size: 20px; margin-right: 15px; flex-shrink: 0; width: 24px; text-align: center;
         }
-        .menu-text { flex: 1; font-size: 15px; font-weight: 700; text-align: left; }
+        .menu-text { flex: 1; font-size: 14px; font-weight: 700; text-align: left; }
 
         #upload-loader {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -93,28 +97,28 @@
         }
 
         /* ========================================= */
-        /* 🌙 DARK MODE FIXES                        */
+        /* 🌙 DARK MODE FIXES (BRYT NAVY THEME)      */
         /* ========================================= */
-        body.dark-mode { background-color: #020617 !important; }
-        body.dark-mode .app-container { background: #0f172a !important; }
-        body.dark-mode .header { background: #1e293b !important; box-shadow: 0 2px 10px rgba(0,0,0,0.5) !important; border-bottom: 1px solid #334155; }
+        body.dark-mode { background-color: #071A3A !important; }
+        body.dark-mode .app-container { background: #0B1220 !important; }
+        body.dark-mode .header { background: #0B1220 !important; box-shadow: 0 2px 10px rgba(0,0,0,0.5) !important; border-bottom: 1px solid #1a2c4d; }
 
         body.dark-mode .header-title,
         body.dark-mode .back-btn { color: #f1f5f9 !important; }
 
-        body.dark-mode .profile-card { background: #1e293b !important; border-color: #334155 !important; box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important; }
+        body.dark-mode .profile-card { background: #071A3A !important; border-color: #1a2c4d !important; box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important; }
         body.dark-mode .profile-name { color: #f1f5f9 !important; }
         body.dark-mode .profile-email { color: #94a3b8 !important; }
-        body.dark-mode .profile-img { border-color: #1e293b !important; background: #334155 !important; }
-        body.dark-mode .edit-badge { border-color: #1e293b !important; background: #f1f5f9 !important; color: #0f172a !important; }
-        body.dark-mode #upload-loader { border-color: #1e293b !important; background: rgba(30, 41, 59, 0.8) !important; }
+        body.dark-mode .profile-img { border-color: #071A3A !important; background: #0B1220 !important; }
+        body.dark-mode .edit-badge { border-color: #071A3A !important; background: #f1f5f9 !important; color: #0B1220 !important; }
+        body.dark-mode #upload-loader { border-color: #071A3A !important; background: rgba(7, 26, 58, 0.8) !important; }
 
-        body.dark-mode .user-badge { background: #334155 !important; color: #cbd5e1 !important; }
-        body.dark-mode .user-badge.vendor { background: rgba(45, 142, 255, 0.15) !important; border-color: #3b82f6 !important; }
+        body.dark-mode .user-badge { background: #0B1220 !important; color: #cbd5e1 !important; }
+        body.dark-mode .user-badge.vendor { background: rgba(29, 94, 208, 0.15) !important; border-color: #1D5ED0 !important; }
 
         body.dark-mode .menu-title { color: #f1f5f9 !important; }
-        body.dark-mode .menu-btn { background: #1e293b !important; box-shadow: none !important; border: 1px solid #334155 !important; color: #f1f5f9 !important; }
-        body.dark-mode .menu-btn:active { background: #334155 !important; }
+        body.dark-mode .menu-btn { background: #071A3A !important; box-shadow: none !important; border: 1px solid #1a2c4d !important; color: #f1f5f9 !important; }
+        body.dark-mode .menu-btn:active { background: #0B1220 !important; }
         body.dark-mode .menu-btn i.fa-chevron-right { color: #475569 !important; }
         body.dark-mode .menu-btn .menu-text[style*="color: #ef4444"] { color: #fca5a5 !important; }
     </style>
@@ -207,7 +211,7 @@
    <script src="../asset/script.js"></script>
 
     <script>
-        // ⚠️ Replace with your actual Cloudinary name and preset for AFIT
+        // ⚠️ Cloudinary preset left unchanged to maintain current upload functionality
         const CLOUD_NAME = "dgsblxgni"; 
         const UPLOAD_PRESET = "afit_media"; 
         
@@ -232,7 +236,7 @@
                 .single();
 
             if (profileData) {
-                document.getElementById('user-name').innerText = profileData.full_name || "AFIT Student";
+                document.getElementById('user-name').innerText = profileData.full_name || "Student";
                 if (profileData.avatar_url) {
                     document.getElementById('user-img').src = profileData.avatar_url;
                 }

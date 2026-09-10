@@ -3,44 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AFIT Command Center | Admin</title>
+    <title>BRYT Command Center | Admin</title>
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <link rel="icon" href="../asset/img/app-logo.png" type="image/png" sizes="192x192">
-  <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../asset/img/bryt-app-logo.png" type="image/png" sizes="192x192">
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
 
-    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap');
-
+        /* 🚀 PRECISE BRYT TECHNOLOGIES SYSTEM */
         :root {
-            --bg-color: #f8fafc;
-            --brand-color: #2d8eff; /* AFIT Blue */
-            --brand-dark: #1e293b;
-            --text-main: #0f172a;
+            --bg-color: #F5F8FC;
+            --brand-color: #1D5ED0; 
+            --brand-hover: #159FE3;
+            --brand-dark: #071A3A;
+            --text-main: #0B1220;
             --text-muted: #64748b;
             --surface: #ffffff;
             --border: #e2e8f0;
+            --shadow-sm: 0 4px 15px rgba(11, 18, 32, 0.03);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Sora', sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); padding-bottom: 50px; }
         
-        /* SLEEK HEADER */
+        /* 🚀 PREMIUM ADMIN HEADER */
         .admin-header {
-            background: var(--brand-dark); color: white; padding: 20px 25px; 
+            background: linear-gradient(135deg, var(--brand-dark), #0B1220); color: white; padding: 20px 25px; 
             display: flex; justify-content: space-between; align-items: center; 
-            position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+            position: sticky; top: 0; z-index: 100; box-shadow: 0 10px 30px rgba(11, 18, 32, 0.15);
         }
-        .header-brand { display: flex; align-items: center; gap: 12px; }
-        .header-icon { background: var(--brand-color); width: 36px; height: 36px; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 16px; box-shadow: 0 4px 10px rgba(45,142,255,0.4); }
-        .admin-header h3 { margin: 0; font-size: 18px; font-weight: 900; letter-spacing: -0.5px;}
-        .admin-subtitle { font-size: 11px; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
-        .exit-btn { background: rgba(255,255,255,0.1); color: white; text-decoration: none; padding: 8px 16px; border-radius: 12px; font-size: 12px; font-weight: 800; transition: 0.2s; }
-        .exit-btn:hover { background: rgba(255,255,255,0.2); }
+        .header-brand { display: flex; align-items: center; gap: 15px; }
+        .header-icon { 
+            background: linear-gradient(135deg, var(--brand-color), var(--brand-hover)); width: 42px; height: 42px; 
+            border-radius: 12px; display: flex; justify-content: center; align-items: center; 
+            font-size: 18px; box-shadow: 0 4px 15px rgba(29, 94, 208, 0.4); 
+        }
+        .admin-header h3 { margin: 0; font-size: 18px; font-weight: 800; letter-spacing: -0.5px;}
+        .admin-subtitle { font-size: 11px; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px;}
+        
+        .exit-btn { 
+            background: rgba(255,255,255,0.1); color: white; text-decoration: none; padding: 10px 18px; 
+            border-radius: 12px; font-size: 13px; font-weight: 800; transition: 0.2s; backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .exit-btn:active { transform: scale(0.95); background: rgba(255,255,255,0.2); }
 
         /* LOADING STATE */
         #security-check { height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
@@ -48,86 +56,149 @@
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
         .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; display: none; }
-        .section-title { font-size: 16px; font-weight: 900; margin: 30px 0 15px; color: var(--brand-dark); text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; }
+        .section-title { font-size: 16px; font-weight: 800; margin: 35px 0 20px; color: var(--brand-dark); text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; }
 
-        /* REDESIGNED DASHBOARD GRID */
+        /* 🚀 REDESIGNED SAAS-STYLE DASHBOARD GRID */
         .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .admin-card { background: var(--surface); padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px solid var(--border); transition: transform 0.2s; display: flex; flex-direction: column; }
-        .admin-card:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0,0,0,0.05); }
+        .admin-card { 
+            background: var(--surface); padding: 25px; border-radius: 24px; box-shadow: var(--shadow-sm); 
+            border: 1px solid var(--border); transition: 0.2s; display: flex; flex-direction: column; 
+        }
+        .admin-card:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(11, 18, 32, 0.05); border-color: #cbd5e1;}
         
-        .card-icon-wrapper { width: 50px; height: 50px; border-radius: 14px; display: flex; justify-content: center; align-items: center; font-size: 22px; margin-bottom: 15px; }
-        .card-title { font-size: 18px; font-weight: 800; margin-bottom: 8px; color: var(--text-main); }
-        .card-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 25px; line-height: 1.5; flex-grow: 1; }
+        .card-icon-wrapper { width: 55px; height: 55px; border-radius: 16px; display: flex; justify-content: center; align-items: center; font-size: 24px; margin-bottom: 20px; }
+        .card-title { font-size: 18px; font-weight: 800; margin-bottom: 8px; color: var(--text-main); letter-spacing: -0.5px;}
+        .card-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 25px; line-height: 1.6; flex-grow: 1; font-weight: 500;}
 
-        .open-modal-btn { border: none; padding: 14px; border-radius: 12px; font-weight: 800; font-size: 14px; cursor: pointer; transition: 0.2s; width: 100%; display: flex; justify-content: center; align-items: center; gap: 8px; }
+        .open-modal-btn { 
+            border: none; padding: 15px; border-radius: 14px; font-weight: 800; font-family: 'Sora', sans-serif; font-size: 14px; 
+            cursor: pointer; transition: 0.2s; width: 100%; display: flex; justify-content: center; align-items: center; gap: 8px; 
+        }
         .open-modal-btn:active { transform: scale(0.97); }
 
-        /* Card Themes */
-        .theme-blue .card-icon-wrapper { background: #eff6ff; color: #3b82f6; } .theme-blue .open-modal-btn { background: #3b82f6; color: white; }
-        .theme-green .card-icon-wrapper { background: #ecfdf5; color: #10b981; } .theme-green .open-modal-btn { background: #10b981; color: white; }
-        .theme-red .card-icon-wrapper { background: #fef2f2; color: #ef4444; } .theme-red .open-modal-btn { background: #ef4444; color: white; }
-        .theme-yellow .card-icon-wrapper { background: #fefce8; color: #eab308; } .theme-yellow .open-modal-btn { background: #eab308; color: white; }
-        .theme-purple .card-icon-wrapper { background: #faf5ff; color: #a855f7; } .theme-purple .open-modal-btn { background: #a855f7; color: white; }
-        .theme-orange .card-icon-wrapper { background: #fff7ed; color: #f97316; } .theme-orange .open-modal-btn { background: #f97316; color: white; }
-        .theme-teal .card-icon-wrapper { background: #f0fdfa; color: #14b8a6; } .theme-teal .open-modal-btn { background: #14b8a6; color: white; }
+        /* Stunning Card Themes */
+        .theme-blue .card-icon-wrapper { background: linear-gradient(135deg, #eff6ff, #dbeafe); color: #3b82f6; border: 1px solid #bfdbfe;} 
+        .theme-blue .open-modal-btn { background: #3b82f6; color: white; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);}
+        
+        .theme-green .card-icon-wrapper { background: linear-gradient(135deg, #ecfdf5, #d1fae5); color: #10b981; border: 1px solid #a7f3d0;} 
+        .theme-green .open-modal-btn { background: #10b981; color: white; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);}
+        
+        .theme-red .card-icon-wrapper { background: linear-gradient(135deg, #fef2f2, #fee2e2); color: #ef4444; border: 1px solid #fecaca;} 
+        .theme-red .open-modal-btn { background: #ef4444; color: white; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);}
+        
+        .theme-yellow .card-icon-wrapper { background: linear-gradient(135deg, #fefce8, #fef08a); color: #eab308; border: 1px solid #fde047;} 
+        .theme-yellow .open-modal-btn { background: #eab308; color: white; box-shadow: 0 4px 15px rgba(234, 179, 8, 0.3);}
+        
+        .theme-purple .card-icon-wrapper { background: linear-gradient(135deg, #faf5ff, #f3e8ff); color: #a855f7; border: 1px solid #e9d5ff;} 
+        .theme-purple .open-modal-btn { background: #a855f7; color: white; box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);}
+        
+        .theme-orange .card-icon-wrapper { background: linear-gradient(135deg, #fff7ed, #ffedd5); color: #f97316; border: 1px solid #fed7aa;} 
+        .theme-orange .open-modal-btn { background: #f97316; color: white; box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);}
+        
+        .theme-teal .card-icon-wrapper { background: linear-gradient(135deg, #f0fdfa, #ccfbf1); color: #14b8a6; border: 1px solid #99f6e4;} 
+        .theme-teal .open-modal-btn { background: #14b8a6; color: white; box-shadow: 0 4px 15px rgba(20, 184, 166, 0.3);}
 
-        /* MODALS */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(5px); z-index: 1000; justify-content: center; align-items: flex-end; }
+        /* 🚀 PREMIUM GLASSMORPHISM MODALS */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 18, 32, 0.7); backdrop-filter: blur(8px); z-index: 2000; justify-content: center; align-items: flex-end; }
         @media (min-width: 768px) { .modal-overlay { align-items: center; padding: 20px; } }
         
-        .modal-body { background: var(--bg-color); width: 100%; max-width: 600px; max-height: 90vh; border-radius: 24px 24px 0 0; display: flex; flex-direction: column; box-shadow: 0 -10px 40px rgba(0,0,0,0.2); animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-        @media (min-width: 768px) { .modal-body { border-radius: 24px; max-height: 85vh; box-shadow: 0 20px 50px rgba(0,0,0,0.2); } }
+        .modal-body { background: var(--bg-color); width: 100%; max-width: 650px; max-height: 90vh; border-radius: 30px 30px 0 0; display: flex; flex-direction: column; box-shadow: 0 -10px 40px rgba(11, 18, 32, 0.2); animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        @media (min-width: 768px) { .modal-body { border-radius: 24px; max-height: 85vh; box-shadow: 0 20px 50px rgba(11, 18, 32, 0.2); } }
         
         @keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         
-        .modal-header { background: var(--surface); padding: 20px 25px; border-radius: 24px 24px 0 0; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); flex-shrink: 0; }
-        .modal-header h2 { font-size: 18px; margin: 0; font-weight: 800; display: flex; align-items: center; gap: 10px; }
-        .close-btn { background: #f1f5f9; border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 18px; color: var(--text-muted); cursor: pointer; transition: 0.2s; display: flex; justify-content: center; align-items: center; }
-        .close-btn:active { background: #e2e8f0; }
+        .modal-header { background: var(--surface); padding: 25px; border-radius: 30px 30px 0 0; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+        .modal-header h2 { font-size: 20px; margin: 0; font-weight: 800; display: flex; align-items: center; gap: 10px; letter-spacing: -0.5px;}
+        .close-btn { background: #f1f5f9; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 18px; color: var(--text-muted); cursor: pointer; transition: 0.2s; display: flex; justify-content: center; align-items: center; }
+        .close-btn:active { background: #e2e8f0; transform: scale(0.9); }
         
         .modal-content-scroll { padding: 20px 25px; overflow-y: auto; flex-grow: 1; }
 
         /* FORMS & LIST ITEMS */
-        .admin-input { width: 100%; padding: 14px; border: 2px solid var(--border); border-radius: 12px; font-size: 14px; background: var(--surface); outline: none; margin-bottom: 15px; transition: 0.2s; }
-        .admin-input:focus { border-color: var(--brand-color); }
+        .admin-input { width: 100%; padding: 16px; border: 2px solid var(--border); border-radius: 14px; font-size: 14px; background: var(--surface); outline: none; margin-bottom: 15px; transition: 0.2s; font-family: 'Sora', sans-serif; font-weight: 500;}
+        .admin-input:focus { border-color: var(--brand-color); box-shadow: 0 4px 15px rgba(29, 94, 208, 0.1);}
         
         .search-group { display: flex; gap: 10px; margin-bottom: 25px; }
         .search-group .admin-input { margin-bottom: 0; }
         
-        .list-item { background: var(--surface); padding: 20px; border-radius: 16px; margin-bottom: 15px; border: 1px solid var(--border); box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+        .list-item { background: var(--surface); padding: 20px; border-radius: 20px; margin-bottom: 15px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
         .item-title { font-size: 16px; font-weight: 800; color: var(--text-main); margin-bottom: 5px; }
-        .item-meta { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; font-weight: 600; }
+        .item-meta { font-size: 12px; color: var(--text-muted); margin-bottom: 15px; font-weight: 600; display: flex; align-items: center; gap: 6px;}
         
-        .item-data-box { background: #f8fafc; padding: 12px; border-radius: 10px; font-size: 13px; color: var(--text-main); margin-bottom: 15px; border: 1px solid #e2e8f0; }
+        .item-data-box { background: #F5F8FC; padding: 15px; border-radius: 12px; font-size: 13px; color: var(--text-main); margin-bottom: 15px; border: 1px solid #e2e8f0; line-height: 1.6; font-weight: 500;}
         .item-data-box a { color: var(--brand-color); text-decoration: none; font-weight: 800; }
         
         .action-row { display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px; border-top: 1px solid var(--border); padding-top: 15px; }
-        .action-btn { padding: 10px 18px; border: none; border-radius: 10px; font-weight: 800; font-size: 13px; cursor: pointer; transition: 0.2s; }
+        .action-btn { padding: 12px 18px; border: none; border-radius: 12px; font-weight: 800; font-family: 'Sora', sans-serif; font-size: 13px; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px;}
         .action-btn:active { transform: scale(0.96); }
         
-        .btn-approve { background: #10b981; color: white; }
+        .btn-approve { background: #10b981; color: white; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);}
         .btn-edit { background: #eab308; color: white; }
-        .btn-delete { background: #fef2f2; color: #ef4444; }
-        .btn-suspend { background: #fef2f2; color: #ef4444; }
-        .btn-unsuspend { background: #eff6ff; color: #3b82f6; }
-        .btn-primary { background: var(--brand-dark); color: white; }
+        .btn-delete { background: #fef2f2; color: #ef4444; border: 1px solid #fecaca;}
+        .btn-suspend { background: #fef2f2; color: #ef4444; border: 1px solid #fecaca;}
+        .btn-unsuspend { background: #eff6ff; color: var(--brand-color); border: 1px solid #bfdbfe;}
+        .btn-primary { background: var(--brand-color); color: white; box-shadow: 0 4px 10px rgba(29, 94, 208, 0.3);}
 
         .vm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
-        .vm-label { font-size: 11px; font-weight: 800; color: var(--text-muted); margin-bottom: 6px; display: block; }
-        .vm-input { width: 100%; padding: 12px; border: 2px solid var(--border); border-radius: 10px; font-size: 14px; outline: none; background: #f8fafc; }
-        .vm-input:focus { border-color: var(--brand-color); background: white; }
+        .vm-label { font-size: 11px; font-weight: 800; color: var(--text-muted); margin-bottom: 6px; display: block; text-transform: uppercase; letter-spacing: 0.5px;}
+        .vm-input { width: 100%; padding: 14px; border: 2px solid var(--border); border-radius: 12px; font-size: 14px; outline: none; background: #F5F8FC; font-family: 'Sora', sans-serif; font-weight: 500;}
+        .vm-input:focus { border-color: var(--brand-color); background: white; box-shadow: 0 4px 10px rgba(29, 94, 208, 0.1);}
         
-        .status-badge { font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 12px; letter-spacing: 0.5px; }
+        .status-badge { font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 8px; letter-spacing: 0.5px; display: inline-block;}
+        
+        /* 🚀 PAYSTACK REFERENCE BOX */
+        .paystack-box { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 15px; border-radius: 12px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .paystack-label { font-size: 10px; color: #16a34a; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .paystack-ref { font-size: 15px; font-weight: 800; color: #065f46; font-family: monospace; }
+        .paystack-copy { background: white; color: #16a34a; border: 1px solid #86efac; padding: 8px 14px; border-radius: 8px; font-weight: 800; font-family: 'Sora', sans-serif; font-size: 12px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 5px rgba(22, 163, 74, 0.1);}
+        .paystack-copy:active { transform: scale(0.9); }
+
+        /* ========================================= */
+        /* 🌙 DARK MODE FIXES (BRYT NAVY THEME)      */
+        /* ========================================= */
+        body.dark-mode { background-color: #071A3A !important; }
+        body.dark-mode .admin-header { background: linear-gradient(135deg, #0B1220, #071A3A) !important; border-bottom: 1px solid #1a2c4d; box-shadow: none;}
+        
+        body.dark-mode #security-check { background: #071A3A !important; }
+        body.dark-mode .section-title { color: #f1f5f9 !important; }
+        
+        body.dark-mode .admin-card { background: #0B1220 !important; border-color: #1a2c4d !important; box-shadow: none;}
+        body.dark-mode .admin-card:hover { border-color: #334155 !important; }
+        body.dark-mode .card-title { color: #f1f5f9 !important; }
+        body.dark-mode .card-desc { color: #94a3b8 !important; }
+        
+        body.dark-mode .modal-body { background: #0B1220 !important; border: 1px solid #1a2c4d; }
+        body.dark-mode .modal-header { background: #0B1220 !important; border-bottom-color: #1a2c4d !important; }
+        body.dark-mode .modal-header h2 { color: #f1f5f9 !important; }
+        body.dark-mode .close-btn { background: #1a2c4d !important; color: #f1f5f9 !important; }
+        
+        body.dark-mode .list-item { background: #0B1220 !important; border-color: #1a2c4d !important; box-shadow: none;}
+        body.dark-mode .item-title { color: #f1f5f9 !important; }
+        body.dark-mode .item-data-box { background: #071A3A !important; border-color: #1a2c4d !important; color: #cbd5e1 !important; }
+        body.dark-mode .action-row { border-top-color: #1a2c4d !important; }
+        
+        body.dark-mode .admin-input, body.dark-mode .vm-input { background: #071A3A !important; border-color: #1a2c4d !important; color: #f1f5f9 !important; }
+        body.dark-mode .admin-input:focus, body.dark-mode .vm-input:focus { border-color: var(--brand-color) !important; }
+        
+        body.dark-mode .paystack-box { background: rgba(22, 163, 74, 0.1) !important; border-color: rgba(22, 163, 74, 0.3) !important; }
+        body.dark-mode .paystack-ref { color: #4ade80 !important; }
+        body.dark-mode .paystack-copy { background: #0B1220 !important; color: #4ade80 !important; border-color: #16a34a !important; }
+        
+        body.dark-mode .btn-delete, body.dark-mode .btn-suspend { background: rgba(239, 68, 68, 0.1) !important; border-color: rgba(239, 68, 68, 0.3) !important; color: #f87171 !important; }
+        body.dark-mode .btn-unsuspend { background: rgba(29, 94, 208, 0.1) !important; border-color: rgba(29, 94, 208, 0.3) !important; color: #60a5fa !important; }
     </style>
 </head>
 <body>
+    <script>
+        if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark-mode');
+    </script>
 
     <div class="admin-header">
         <div class="header-brand">
             <div class="header-icon"><i class="fas fa-shield-alt"></i></div>
             <div>
                 <h3>Admin Portal</h3>
-                <div class="admin-subtitle">AFIT Command Center</div>
+                <div class="admin-subtitle">BRYT Command Center</div>
             </div>
         </div>
         <a href="../index.html" class="exit-btn"><i class="fas fa-sign-out-alt"></i> Exit</a>
@@ -135,8 +206,8 @@
 
     <div id="security-check">
         <i class="fas fa-fingerprint spinner"></i>
-        <div style="font-weight: 800; font-size: 16px; color: var(--brand-dark);">Authenticating...</div>
-        <div style="font-size: 12px; color: var(--text-muted); margin-top: 5px;">Checking Security Clearance</div>
+        <div style="font-weight: 800; font-size: 18px; color: var(--brand-dark); margin-bottom: 5px;">Authenticating...</div>
+        <div style="font-size: 13px; color: var(--text-muted); font-weight: 500;">Verifying Security Clearance</div>
     </div>
 
     <div id="admin-content" class="container">
@@ -147,7 +218,7 @@
             <div class="admin-card theme-blue">
                 <div class="card-icon-wrapper"><i class="fas fa-clipboard-check"></i></div>
                 <div class="card-title">Vendor Approvals</div>
-                <div class="card-desc">Review new store applications, check payment receipts and ID cards, and approve them.</div>
+                <div class="card-desc">Review new store applications, verify Paystack payments, check IDs, and approve them.</div>
                 <button class="open-modal-btn" onclick="openModal('approvalModal', loadApprovals)">Review Pending</button>
             </div>
 
@@ -205,7 +276,7 @@
             <div class="admin-card theme-purple">
                 <div class="card-icon-wrapper"><i class="fas fa-newspaper"></i></div>
                 <div class="card-title">Blog & News Manager</div>
-                <div class="card-desc">Write, edit, and publish campus news and updates directly to the marketplace.</div>
+                <div class="card-desc">Write, edit, and publish news and updates directly to the marketplace.</div>
                 <button class="open-modal-btn" onclick="openModal('blogModal', loadAdminBlogs)">Open Manager</button>
             </div>
             
@@ -219,6 +290,7 @@
         </div>
     </div>
 
+    <!-- MODALS -->
     <div id="approvalModal" class="modal-overlay">
         <div class="modal-body">
             <div class="modal-header"><h2><i class="fas fa-clipboard-check" style="color:#3b82f6;"></i> Pending Approvals</h2><button class="close-btn" onclick="closeModal('approvalModal')"><i class="fas fa-times"></i></button></div>
@@ -263,8 +335,8 @@
         <div class="modal-body">
             <div class="modal-header"><h2><i class="fas fa-newspaper" style="color:#a855f7;"></i> Blog Manager</h2><button class="close-btn" onclick="closeModal('blogModal')"><i class="fas fa-times"></i></button></div>
             <div class="modal-content-scroll">
-                <div style="background:white; padding:20px; border-radius:16px; margin-bottom:25px; border: 1px solid var(--border);">
-                    <h3 style="margin-bottom: 15px; font-size: 16px; font-weight: 800;" id="blogFormTitle">Create New Post</h3>
+                <div style="background:var(--surface); padding:20px; border-radius:20px; margin-bottom:25px; border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+                    <h3 style="margin-bottom: 15px; font-size: 16px; font-weight: 800; color: var(--text-main);" id="blogFormTitle">Create New Post</h3>
                     <input type="hidden" id="editBlogId">
                     <input type="text" id="blogTitle" class="admin-input" placeholder="Post Title">
                     <select id="blogCategory" class="admin-input">
@@ -273,14 +345,14 @@
                         <option value="Gossip">Gossip</option>
                         <option value="Events">Events</option>
                     </select>
-                    <textarea id="blogSnippet" class="admin-input" placeholder="Short Snippet (Displays on homepage)" style="height: 60px;"></textarea>
+                    <textarea id="blogSnippet" class="admin-input" placeholder="Short Snippet (Displays on homepage)" style="height: 80px; resize: none;"></textarea>
                     <textarea id="blogContent" class="admin-input" placeholder="Full article content..." style="height: 150px;"></textarea>
                     
                     <label class="vm-label">Cover Image</label>
-                    <input type="file" id="blogImage" class="admin-input" accept="image/*">
+                    <input type="file" id="blogImage" class="admin-input" accept="image/*" style="padding: 12px;">
                     
-                    <button class="action-btn btn-primary" id="saveBlogBtn" style="width:100%; padding:14px;" onclick="saveBlog()">Publish Post</button>
-                    <button class="action-btn" id="cancelEditBtn" style="width: 100%; margin-top: 10px; display: none; background: #e2e8f0; color: #0f172a;" onclick="resetBlogForm()">Cancel Edit</button>
+                    <button class="action-btn btn-primary" id="saveBlogBtn" style="width:100%; padding:16px; font-size: 15px;" onclick="saveBlog()"><i class="fas fa-paper-plane"></i> Publish Post</button>
+                    <button class="action-btn btn-delete" id="cancelEditBtn" style="width: 100%; margin-top: 10px; display: none; padding:16px; font-size: 15px;" onclick="resetBlogForm()"><i class="fas fa-times"></i> Cancel Edit</button>
                 </div>
                 <div id="modal-blogs-list"></div>
             </div>
@@ -289,7 +361,7 @@
 
     <div id="featuredModal" class="modal-overlay">
         <div class="modal-body">
-            <div class="modal-header"><h2><i class="fas fa-thumbtack" style="color:#3b82f6;"></i> Featured Items Manager</h2><button class="close-btn" onclick="closeModal('featuredModal')"><i class="fas fa-times"></i></button></div>
+            <div class="modal-header"><h2><i class="fas fa-thumbtack" style="color:#3b82f6;"></i> Featured Items</h2><button class="close-btn" onclick="closeModal('featuredModal')"><i class="fas fa-times"></i></button></div>
             <div class="modal-content-scroll">
                 <div class="search-group">
                     <input type="text" id="featured-search" class="admin-input" placeholder="Search Vendor Name or Code...">
@@ -304,8 +376,8 @@
         <div class="modal-body">
             <div class="modal-header"><h2><i class="fas fa-bell" style="color:#f97316;"></i> Notification Center</h2><button class="close-btn" onclick="closeModal('notifModal')"><i class="fas fa-times"></i></button></div>
             <div class="modal-content-scroll">
-                <div style="background:white; padding:20px; border-radius:16px; margin-bottom:25px; border: 1px solid var(--border);">
-                    <h3 style="margin-bottom: 15px; font-size: 16px; font-weight: 800;">Send New Broadcast</h3>
+                <div style="background:var(--surface); padding:20px; border-radius:20px; margin-bottom:25px; border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+                    <h3 style="margin-bottom: 15px; font-size: 16px; font-weight: 800; color: var(--text-main);">Send New Broadcast</h3>
                     
                     <input type="text" id="notifTitle" class="admin-input" placeholder="Notification Title (e.g., 'Flash Sale!')">
                     <select id="notifType" class="admin-input">
@@ -314,18 +386,18 @@
                         <option value="alert">Alert / Warning (Red Icon)</option>
                         <option value="success">Success / Update (Green Icon)</option>
                     </select>
-                    <textarea id="notifMessage" class="admin-input" placeholder="Write your notification message here..." style="height: 80px; resize: none;"></textarea>
+                    <textarea id="notifMessage" class="admin-input" placeholder="Write your notification message here..." style="height: 100px; resize: none;"></textarea>
                     
-                    <div style="background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px dashed #cbd5e1; margin-bottom: 15px;">
+                    <div style="background: #F5F8FC; padding: 15px; border-radius: 12px; border: 1px dashed #cbd5e1; margin-bottom: 15px;">
                         <label class="vm-label">Target Specific User (Optional)</label>
-                        <div style="font-size: 11px; color: #64748b; margin-bottom: 8px;">Enter a User ID to send privately. Leave blank to notify EVERYONE.</div>
-                        <input type="text" id="notifUserId" class="admin-input" style="margin-bottom: 0; padding: 10px;" placeholder="User ID">
+                        <div style="font-size: 12px; color: #64748b; margin-bottom: 10px; line-height: 1.4; font-weight: 500;">Enter a User ID to send privately. Leave blank to notify EVERYONE.</div>
+                        <input type="text" id="notifUserId" class="admin-input" style="margin-bottom: 0;" placeholder="User ID">
                     </div>
                     
-                    <button class="action-btn" id="sendNotifBtn" style="width:100%; padding:14px; background: #f97316; color: white;" onclick="sendNotification()"><i class="fas fa-paper-plane"></i> Send Notification</button>
+                    <button class="action-btn" id="sendNotifBtn" style="width:100%; padding:16px; background: #f97316; color: white; font-size: 15px; box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);" onclick="sendNotification()"><i class="fas fa-paper-plane"></i> Send Notification</button>
                 </div>
                 
-                <h3 style="margin-bottom: 15px; font-size: 16px; font-weight: 800;">Past Broadcasts</h3>
+                <h3 style="margin-bottom: 15px; font-size: 16px; font-weight: 800; color: var(--text-main);">Past Broadcasts</h3>
                 <div id="admin-notifs-list"></div>
             </div>
         </div>
@@ -348,10 +420,10 @@
         <div class="modal-body">
             <div class="modal-header"><h2><i class="fas fa-ad" style="color:#14b8a6;"></i> Ad Popups Manager</h2><button class="close-btn" onclick="closeModal('adsModal')"><i class="fas fa-times"></i></button></div>
             <div class="modal-content-scroll">
-                <div style="background:white; padding:20px; border-radius:16px; margin-bottom:25px; border: 1px solid var(--border);">
-                    <h3 style="margin-bottom: 15px; font-size: 16px; font-weight: 800;">Create New Ad Popup</h3>
+                <div style="background:var(--surface); padding:20px; border-radius:20px; margin-bottom:25px; border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+                    <h3 style="margin-bottom: 15px; font-size: 16px; font-weight: 800; color: var(--text-main);">Create New Ad Popup</h3>
                     <input type="text" id="adTitle" class="admin-input" placeholder="Ad Title (e.g., Flash Sale!)">
-                    <textarea id="adContent" class="admin-input" placeholder="Ad text/content..." style="height: 80px;"></textarea>
+                    <textarea id="adContent" class="admin-input" placeholder="Ad text/content..." style="height: 100px; resize: none;"></textarea>
                     
                     <div class="vm-grid" style="margin-bottom: 0;">
                         <div>
@@ -364,11 +436,11 @@
                         </div>
                     </div>
                     
-                    <label class="vm-label">Ad Image (Optional)</label>
-                    <input type="file" id="adImage" class="admin-input" accept="image/*">
-                    <button class="action-btn btn-primary" id="saveAdBtn" style="width:100%; padding:14px; background: #14b8a6;" onclick="saveAd()"><i class="fas fa-paper-plane"></i> Publish Ad</button>
+                    <label class="vm-label" style="margin-top: 15px;">Ad Image (Optional)</label>
+                    <input type="file" id="adImage" class="admin-input" accept="image/*" style="padding: 12px;">
+                    <button class="action-btn btn-primary" id="saveAdBtn" style="width:100%; padding:16px; background: #14b8a6; box-shadow: 0 4px 15px rgba(20, 184, 166, 0.3); font-size: 15px;" onclick="saveAd()"><i class="fas fa-paper-plane"></i> Publish Ad</button>
                 </div>
-                <h3 style="margin-bottom: 15px; font-size: 16px; font-weight: 800;">Active & Past Ads</h3>
+                <h3 style="margin-bottom: 15px; font-size: 16px; font-weight: 800; color: var(--text-main);">Active & Past Ads</h3>
                 <div id="modal-ads-list"></div>
             </div>
         </div>
@@ -379,7 +451,20 @@
     <script>
         const CLOUD_NAME = "dgsblxgni"; 
 
+        // 🛡️ XSS Sanitizers
+        function escapeHTML(str) {
+            if (!str) return '';
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+        }
+        function escapeJS(str) {
+            if (!str) return '';
+            return String(str).replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/\n/g, '\\n');
+        }
+
         document.addEventListener("DOMContentLoaded", async () => {
+            if (typeof supabaseClient === 'undefined') {
+                window.location.href = "../login/index.html"; return;
+            }
             const { data: { session } } = await supabaseClient.auth.getSession();
             if (!session) { window.location.href = "../login/index.html"; return; }
             
@@ -391,13 +476,13 @@
                     document.getElementById('admin-content').style.display = 'block'; 
                 }, 1000); 
             } else {
-                document.body.innerHTML = `
-                    <div style="height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #0f172a;">
-                        <i class="fas fa-user-shield" style="font-size: 60px; color: #ef4444; margin-bottom: 20px;"></i>
-                        <h2 style='color:white; font-weight: 900;'>ACCESS DENIED</h2>
-                        <p style='color: #94a3b8; font-size: 14px; margin-top: 10px;'>Your email is not registered as an Admin.</p>
-                        <button onclick="window.location.href='../index.html'" style="margin-top: 20px; padding: 10px 20px; border-radius: 10px; border: none; background: #2d8eff; color: white; font-weight: bold; cursor: pointer;">Return to Market</button>
-                    </div>`;
+                document.body.innerHTML = 
+                    '<div style="height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #0B1220;">' +
+                        '<i class="fas fa-user-shield" style="font-size: 60px; color: #ef4444; margin-bottom: 20px;"></i>' +
+                        '<h2 style="color:white; font-weight: 800;">ACCESS DENIED</h2>' +
+                        '<p style="color: #94a3b8; font-size: 14px; margin-top: 10px; font-family: \'Sora\', sans-serif;">Your email is not registered as an Admin.</p>' +
+                        '<button onclick="window.location.href=\'../index.html\'" style="margin-top: 25px; padding: 14px 24px; border-radius: 14px; border: none; background: #1D5ED0; color: white; font-weight: 800; cursor: pointer; font-size: 14px; font-family: \'Sora\', sans-serif;">Return to Market</button>' +
+                    '</div>';
             }
         });
 
@@ -412,46 +497,69 @@
         }
 
         // ===============================================
-        // 🚀 PREVIOUS ADMIN MODULES (UNCHANGED)
+        // 🚀 VENDOR APPROVALS & PAYSTACK VERIFICATION
         // ===============================================
         window.loadApprovals = async function() {
             const list = document.getElementById('approval-list');
-            list.innerHTML = '<p style="text-align:center; padding: 40px; color: #64748b;"><i class="fas fa-spinner fa-spin" style="font-size: 24px; color: #3b82f6; margin-bottom: 10px; display: block;"></i> Loading pending applications...</p>';
+            list.innerHTML = '<p style="text-align:center; padding: 40px; color: #64748b;"><i class="fas fa-spinner fa-spin" style="font-size: 30px; color: var(--brand-color); margin-bottom: 15px; display: block;"></i> Loading pending applications...</p>';
+            
             try {
                 const { data, error } = await supabaseClient.from('vendors').select('*').eq('is_active', false);
                 if (error) throw error;
                 const pending = data.filter(v => v.is_suspended !== true);
 
-                if (pending.length === 0) { list.innerHTML = "<p style='text-align:center; color:#94a3b8; padding: 40px;'>No pending applications right now.</p>"; return; }
+                if (pending.length === 0) { 
+                    list.innerHTML = '<p style="text-align:center; color:#94a3b8; padding: 40px; font-weight: 600;">No pending applications right now.</p>'; 
+                    return; 
+                }
 
-                list.innerHTML = "";
-                pending.forEach(v => {
-                    const userEmail = v.email || 'No email attached';
-                    list.innerHTML += `
-                        <div class="list-item" style="border-left: 4px solid #3b82f6;">
-                            <div class="item-title">${v.business_name}</div>
-                            <div class="item-meta"><i class="fas fa-id-badge" style="color:#3b82f6;"></i> ${v.vendor_code} | <i class="fas fa-phone"></i> ${v.whatsapp_number || 'N/A'}</div>
-                            <div class="item-data-box">
-                                <b>Requested Plan:</b> ${v.subscription_plan}<br>
-                                <b>Location:</b> ${v.location || 'N/A'}<br>
-                                <b>Categories:</b> ${v.categories}
-                            </div>
-                            <div style="display:flex; gap:15px; font-size:13px; margin-bottom:15px; flex-wrap: wrap;">
-                                <a href="${v.receipt_url}" target="_blank" style="color:#10b981; background: #ecfdf5; padding: 6px 12px; border-radius: 8px;"><i class="fas fa-file-invoice-dollar"></i> View Receipt</a>
-                                <a href="${v.student_id_url}" target="_blank" style="color:#8b5cf6; background: #faf5ff; padding: 6px 12px; border-radius: 8px;"><i class="fas fa-id-card"></i> View ID Card</a>
-                            </div>
-                            <div class="action-row">
-                                <button class="action-btn btn-approve" onclick="approveVendor('${v.id}')"><i class="fas fa-check"></i> Approve Vendor</button>
-                            </div>
-                        </div>`;
+                const htmlStrings = pending.map(v => {
+                    const payRef = v.payment_reference || v.receipt_url || 'No Reference Provided';
+                    
+                    const paystackBoxHtml = 
+                        '<div class="paystack-box">' +
+                            '<div>' +
+                                '<div class="paystack-label">Paystack Reference</div>' +
+                                '<div class="paystack-ref">' + escapeHTML(payRef) + '</div>' +
+                            '</div>' +
+                            '<button class="paystack-copy" onclick="navigator.clipboard.writeText(\'' + escapeJS(payRef) + '\'); alert(\'Paystack Reference Copied!\');">' +
+                                '<i class="far fa-copy"></i> Copy' +
+                            '</button>' +
+                        '</div>';
+
+                    return '<div class="list-item" style="border-left: 5px solid #3b82f6;">' +
+                                '<div class="item-title">' + escapeHTML(v.business_name) + '</div>' +
+                                '<div class="item-meta"><i class="fas fa-id-badge" style="color:var(--brand-color);"></i> ' + escapeHTML(v.vendor_code) + ' &bull; <i class="fas fa-phone" style="color:var(--brand-color);"></i> ' + escapeHTML(v.whatsapp_number || 'N/A') + '</div>' +
+                                
+                                '<div class="item-data-box">' +
+                                    '<b>Requested Plan:</b> ' + escapeHTML(v.subscription_plan) + '<br>' +
+                                    '<b>Location:</b> ' + escapeHTML(v.location || 'N/A') + '<br>' +
+                                    '<b>Categories:</b> ' + escapeHTML(v.categories) +
+                                '</div>' +
+
+                                paystackBoxHtml +
+
+                                '<div style="margin-bottom:15px;">' +
+                                    '<a href="' + escapeHTML(v.student_id_url) + '" target="_blank" style="color:#8b5cf6; background: rgba(139, 92, 246, 0.1); padding: 10px 16px; border-radius: 12px; text-decoration: none; font-weight: 800; font-size: 13px; display: inline-flex; align-items: center; gap: 6px;"><i class="fas fa-id-card"></i> View Student ID Card</a>' +
+                                '</div>' +
+                                
+                                '<div class="action-row">' +
+                                    '<button class="action-btn btn-approve" onclick="approveVendor(\'' + escapeJS(v.id) + '\', this)"><i class="fas fa-check"></i> Approve Vendor</button>' +
+                                '</div>' +
+                           '</div>';
                 });
-            } catch (error) { list.innerHTML = "<p style='color:red; text-align:center;'>Failed to load. Check console for details.</p>"; }
+
+                list.innerHTML = htmlStrings.join('');
+            } catch (error) { 
+                list.innerHTML = '<p style="color:red; text-align:center; padding: 20px; font-weight: 600;">Failed to load. Check console for details.</p>'; 
+            }
         }
 
-        window.approveVendor = async function(id) {
+        window.approveVendor = async function(id, btnElement) {
             if(!confirm("Approve this vendor? They will immediately get access to their dashboard and can start posting items.")) return;
-            event.target.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Approving...';
-            event.target.disabled = true;
+            
+            btnElement.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Approving...';
+            btnElement.disabled = true;
 
             try {
                 const { error } = await supabaseClient.from('vendors').update({ is_active: true, is_suspended: false }).eq('id', id);
@@ -460,17 +568,20 @@
                 loadApprovals(); 
             } catch(e) { 
                 alert("Failed to approve due to a system error."); 
-                event.target.innerHTML = '<i class="fas fa-check"></i> Approve Vendor';
-                event.target.disabled = false;
+                btnElement.innerHTML = '<i class="fas fa-check"></i> Approve Vendor';
+                btnElement.disabled = false;
             }
         }
         
+        // ===============================================
+        // 🚀 VENDOR MANAGER & MODERATION
+        // ===============================================
         window.searchVendors = async function(mode) {
-            const query = document.getElementById(`${mode}-search`).value.toLowerCase().trim();
-            const results = document.getElementById(`${mode}-results`);
+            const query = document.getElementById(mode + '-search').value.toLowerCase().trim();
+            const results = document.getElementById(mode + '-results');
             if(!query) return;
 
-            results.innerHTML = '<p style="text-align:center; padding: 20px;"><i class="fas fa-spinner fa-spin" style="color: var(--brand-color);"></i> Searching database...</p>';
+            results.innerHTML = '<p style="text-align:center; padding: 40px; color: var(--text-muted);"><i class="fas fa-spinner fa-spin" style="font-size: 30px; color: var(--brand-color); margin-bottom: 15px; display: block;"></i> Searching database...</p>';
             
             try {
                 const { data, error } = await supabaseClient.from('vendors').select('*');
@@ -483,10 +594,12 @@
                     return nameMatch || emailMatch || codeMatch;
                 });
 
-                if (matches.length === 0) { results.innerHTML = "<p style='text-align:center; color:#ef4444; padding: 20px; background: #fef2f2; border-radius: 12px;'>No vendor found matching that search.</p>"; return; }
+                if (matches.length === 0) { 
+                    results.innerHTML = '<p style="text-align:center; color:#ef4444; padding: 20px; background: rgba(239, 68, 68, 0.1); border-radius: 12px; font-weight: 600;">No vendor found matching that search.</p>'; 
+                    return; 
+                }
 
-                results.innerHTML = "";
-                matches.forEach(v => {
+                const htmlStrings = matches.map(v => {
                     const userEmail = v.email || ''; 
                     
                     if (mode === 'control') {
@@ -494,68 +607,69 @@
                         const borderColor = isSuspended ? '#ef4444' : '#10b981';
                         const statusTxt = isSuspended ? '<span class="status-badge" style="background:#fef2f2; color:#ef4444;">SUSPENDED</span>' : '<span class="status-badge" style="background:#ecfdf5; color:#10b981;">ACTIVE</span>';
                         
-                        results.innerHTML += `
-                            <div class="list-item" style="border-left: 4px solid ${borderColor};">
-                                <div style="display:flex; justify-content:space-between; align-items: center; margin-bottom: 5px;">
-                                    <div class="item-title" style="margin:0;">${v.business_name}</div>
-                                    <div>${statusTxt}</div>
-                                </div>
-                                <div class="item-meta">${v.vendor_code} • ${userEmail || 'No email attached'}</div>
-                                <div class="action-row">
-                                    ${isSuspended 
-                                        ? `<button class="action-btn btn-unsuspend" onclick="toggleVendorSuspend('${v.id}', true)"><i class="fas fa-undo"></i> Restore Vendor</button>` 
-                                        : `<button class="action-btn btn-suspend" onclick="toggleVendorSuspend('${v.id}', false)"><i class="fas fa-ban"></i> Suspend Vendor</button>`
-                                    }
-                                </div>
-                            </div>`;
+                        const actionBtn = isSuspended 
+                            ? '<button class="action-btn btn-unsuspend" onclick="toggleVendorSuspend(\'' + escapeJS(v.id) + '\', true)"><i class="fas fa-undo"></i> Restore Vendor</button>' 
+                            : '<button class="action-btn btn-suspend" onclick="toggleVendorSuspend(\'' + escapeJS(v.id) + '\', false)"><i class="fas fa-ban"></i> Suspend Vendor</button>';
+                        
+                        return '<div class="list-item" style="border-left: 5px solid ' + borderColor + ';">' +
+                                    '<div style="display:flex; justify-content:space-between; align-items: center; margin-bottom: 8px;">' +
+                                        '<div class="item-title" style="margin:0;">' + escapeHTML(v.business_name) + '</div>' +
+                                        '<div>' + statusTxt + '</div>' +
+                                    '</div>' +
+                                    '<div class="item-meta"><i class="fas fa-id-badge" style="color:var(--brand-color);"></i> ' + escapeHTML(v.vendor_code) + ' &bull; <i class="fas fa-envelope" style="color:var(--brand-color);"></i> ' + escapeHTML(userEmail || 'No email') + '</div>' +
+                                    '<div class="action-row">' + actionBtn + '</div>' +
+                               '</div>';
                     
                     } else if (mode === 'manager') {
                         const plan = v.subscription_plan || 'Verified';
-                        results.innerHTML += `
-                            <div class="list-item" style="border-left: 4px solid #10b981;">
-                                <div class="item-title">${v.business_name}</div>
-                                <hr style="border:0; border-top:1px solid var(--border); margin: 15px 0;">
-                                
-                                <div class="vm-grid">
-                                    <div>
-                                        <label class="vm-label">Vendor Code / ID</label>
-                                        <input type="text" id="vm-code-${v.id}" class="vm-input" value="${v.vendor_code || ''}" placeholder="e.g. V001">
-                                    </div>
-                                    <div>
-                                        <label class="vm-label">Max Items (Slots)</label>
-                                        <input type="number" id="vm-slots-${v.id}" class="vm-input" value="${v.max_items || 0}">
-                                    </div>
-                                </div>
+                        
+                        return '<div class="list-item" style="border-left: 5px solid #10b981;">' +
+                                    '<div class="item-title">' + escapeHTML(v.business_name) + '</div>' +
+                                    '<hr style="border:0; border-top:1px solid var(--border); margin: 15px 0;">' +
+                                    
+                                    '<div class="vm-grid">' +
+                                        '<div>' +
+                                            '<label class="vm-label">Vendor Code / ID</label>' +
+                                            '<input type="text" id="vm-code-' + escapeHTML(v.id) + '" class="vm-input" value="' + escapeHTML(v.vendor_code || '') + '" placeholder="e.g. V001">' +
+                                        '</div>' +
+                                        '<div>' +
+                                            '<label class="vm-label">Max Items (Slots)</label>' +
+                                            '<input type="number" id="vm-slots-' + escapeHTML(v.id) + '" class="vm-input" value="' + (v.max_items || 0) + '">' +
+                                        '</div>' +
+                                    '</div>' +
 
-                                <div class="vm-grid">
-                                    <div style="grid-column: span 2;">
-                                        <label class="vm-label">Subscription Plan</label>
-                                        <select id="vm-plan-${v.id}" class="vm-input">
-                                            <option value="Verified" ${plan === 'Verified' ? 'selected' : ''}>Verified (Blue Badge)</option>
-                                            <option value="Influencer" ${plan === 'Influencer' ? 'selected' : ''}>Influencer (Gold Badge)</option>
-                                            <option value="Icon" ${plan === 'Icon' ? 'selected' : ''}>Icon (Black Badge)</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                
-                                <div style="margin-bottom: 15px;">
-                                    <label class="vm-label">Contact Email</label>
-                                    <input type="email" id="vm-email-${v.id}" class="vm-input" value="${userEmail}">
-                                </div>
+                                    '<div class="vm-grid">' +
+                                        '<div style="grid-column: span 2;">' +
+                                            '<label class="vm-label">Subscription Plan</label>' +
+                                            '<select id="vm-plan-' + escapeHTML(v.id) + '" class="vm-input">' +
+                                                '<option value="Verified" ' + (plan === 'Verified' ? 'selected' : '') + '>Verified (Blue Badge)</option>' +
+                                                '<option value="Influencer" ' + (plan === 'Influencer' ? 'selected' : '') + '>Influencer (Gold Badge)</option>' +
+                                                '<option value="Icon" ' + (plan === 'Icon' ? 'selected' : '') + '>Icon (Black Badge)</option>' +
+                                            '</select>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    
+                                    '<div style="margin-bottom: 20px;">' +
+                                        '<label class="vm-label">Contact Email</label>' +
+                                        '<input type="email" id="vm-email-' + escapeHTML(v.id) + '" class="vm-input" value="' + escapeHTML(userEmail) + '">' +
+                                    '</div>' +
 
-                                <button class="action-btn" style="background:#10b981; color:white; width: 100%; padding: 14px; font-size: 14px;" onclick="updateVendorDetails('${v.id}')">
-                                    <i class="fas fa-save"></i> Save Updates
-                                </button>
-                            </div>`;
+                                    '<button class="action-btn" style="background:#10b981; color:white; width: 100%; padding: 16px; font-size: 14px; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); justify-content: center;" onclick="updateVendorDetails(\'' + escapeJS(v.id) + '\')">' +
+                                        '<i class="fas fa-save"></i> Save Updates' +
+                                    '</button>' +
+                               '</div>';
                     }
                 });
 
-            } catch(e) { results.innerHTML = "<p style='color:red;'>Search failed. Check console.</p>"; }
+                results.innerHTML = htmlStrings.join('');
+            } catch(e) { 
+                results.innerHTML = '<p style="color:red; text-align:center; font-weight: 600;">Search failed. Check console.</p>'; 
+            }
         }
 
         window.toggleVendorSuspend = async function(vendorId, isCurrentlySuspended) {
             const actionStr = isCurrentlySuspended ? "RESTORE" : "SUSPEND";
-            if(!confirm(`Are you sure you want to ${actionStr} this vendor? \n\nSuspending hides all their active products from the marketplace.`)) return;
+            if(!confirm('Are you sure you want to ' + actionStr + ' this vendor? \n\nSuspending hides all their active products from the marketplace.')) return;
 
             try {
                 const newActive = isCurrentlySuspended ? true : false;
@@ -565,16 +679,16 @@
                 await supabaseClient.from('vendors').update({ is_active: newActive, is_suspended: newSuspend }).eq('id', vendorId);
                 await supabaseClient.from('products').update({ status: newProductStatus }).eq('vendor_id', vendorId);
 
-                alert(`Vendor successfully ${isCurrentlySuspended ? 'restored' : 'suspended'}.`);
+                alert('Vendor successfully ' + (isCurrentlySuspended ? 'restored' : 'suspended') + '.');
                 searchVendors('control'); 
             } catch(e) { alert("Action failed."); }
         }
 
         window.updateVendorDetails = async function(vendorId) {
-            const newCode = document.getElementById(`vm-code-${vendorId}`).value.trim();
-            const newSlots = document.getElementById(`vm-slots-${vendorId}`).value;
-            const newPlan = document.getElementById(`vm-plan-${vendorId}`).value;
-            const newEmail = document.getElementById(`vm-email-${vendorId}`).value.trim();
+            const newCode = document.getElementById('vm-code-' + vendorId).value.trim();
+            const newSlots = document.getElementById('vm-slots-' + vendorId).value;
+            const newPlan = document.getElementById('vm-plan-' + vendorId).value;
+            const newEmail = document.getElementById('vm-email-' + vendorId).value.trim();
 
             if(!newSlots || newSlots < 0) return alert("Enter a valid number for slots.");
             if(!newCode) return alert("Vendor Code cannot be empty.");
@@ -593,34 +707,39 @@
             }
         }
 
+        // ===============================================
+        // 🚀 REVIEWS MODULE
+        // ===============================================
         window.loadAdminReviews = async function() {
             const list = document.getElementById('modal-reviews-list'); 
-            list.innerHTML = '<p style="text-align:center; padding:20px;">Loading reviews...</p>';
+            list.innerHTML = '<p style="text-align:center; padding: 40px; color: var(--text-muted);"><i class="fas fa-spinner fa-spin" style="font-size: 30px; color: #eab308; margin-bottom: 15px; display: block;"></i> Loading reviews...</p>';
             try {
                 const { data } = await supabaseClient.from('reviews').select('id, rating, review_text, status, profiles(full_name)').order('created_at', { ascending: false });
-                if (!data || data.length === 0) { list.innerHTML = "<p style='text-align:center; padding:20px;'>No reviews found.</p>"; return; }
+                if (!data || data.length === 0) { list.innerHTML = '<p style="text-align:center; padding:40px; font-weight:600; color:var(--text-muted);">No reviews found.</p>'; return; }
                 
-                list.innerHTML = "";
-                data.forEach(r => {
+                const htmlStrings = data.map(r => {
                     const isPending = r.status === 'pending';
                     const badge = isPending 
-                        ? `<span class="status-badge" style="background:#fefce8; color:#eab308; border: 1px solid #fef08a;">PENDING</span>` 
-                        : `<span class="status-badge" style="background:#ecfdf5; color:#10b981; border: 1px solid #a7f3d0;">LIVE</span>`;
+                        ? '<span class="status-badge" style="background:#fefce8; color:#eab308; border: 1px solid #fef08a;">PENDING</span>' 
+                        : '<span class="status-badge" style="background:#ecfdf5; color:#10b981; border: 1px solid #a7f3d0;">LIVE</span>';
                     
-                    list.innerHTML += `
-                        <div class="list-item" style="${isPending ? 'border-left: 4px solid #eab308;' : 'border-left: 4px solid #10b981;'}">
-                            <div style="display:flex; justify-content:space-between; margin-bottom:10px; align-items: center;">
-                                <div><div class="item-title" style="margin:0;">${r.profiles?.full_name||"Unknown User"}</div><div class="item-meta" style="margin:0; color:#eab308;"><i class="fas fa-star"></i> ${r.rating}/5</div></div>
-                                ${badge}
-                            </div>
-                            <div style="font-size:14px; color:var(--text-muted); line-height: 1.5; background: #f8fafc; padding: 12px; border-radius: 10px;">"${r.review_text}"</div>
-                            <div class="action-row">
-                                ${isPending ? `<button class="action-btn btn-approve" onclick="approveReview('${r.id}')"><i class="fas fa-check"></i> Approve</button>` : ''}
-                                <button class="action-btn btn-delete" onclick="deleteReview('${r.id}')"><i class="fas fa-trash"></i> Delete</button>
-                            </div>
-                        </div>`;
+                    const approveBtn = isPending ? '<button class="action-btn btn-approve" onclick="approveReview(\'' + escapeJS(r.id) + '\')"><i class="fas fa-check"></i> Approve</button>' : '';
+
+                    return '<div class="list-item" style="border-left: 5px solid ' + (isPending ? '#eab308' : '#10b981') + ';">' +
+                                '<div style="display:flex; justify-content:space-between; margin-bottom:12px; align-items: center;">' +
+                                    '<div><div class="item-title" style="margin:0;">' + escapeHTML(r.profiles?.full_name || "Unknown User") + '</div><div class="item-meta" style="margin:0; color:#eab308; font-size: 14px;"><i class="fas fa-star"></i> ' + r.rating + '/5</div></div>' +
+                                    badge +
+                                '</div>' +
+                                '<div style="font-size:14px; color:var(--text-muted); line-height: 1.6; background: var(--bg-color); padding: 15px; border-radius: 12px; border: 1px solid var(--border); font-weight: 500;">"' + escapeHTML(r.review_text) + '"</div>' +
+                                '<div class="action-row">' +
+                                    approveBtn +
+                                    '<button class="action-btn btn-delete" onclick="deleteReview(\'' + escapeJS(r.id) + '\')"><i class="fas fa-trash"></i> Delete</button>' +
+                                '</div>' +
+                           '</div>';
                 });
-            } catch (e) { list.innerHTML = "<p>Error loading reviews.</p>"; }
+
+                list.innerHTML = htmlStrings.join('');
+            } catch (e) { list.innerHTML = '<p style="color:red; text-align:center;">Error loading reviews.</p>'; }
         }
         
         window.approveReview = async function(id) { 
@@ -636,42 +755,47 @@
             } 
         }
 
-       window.loadAdminBlogs = async function() {
+        // ===============================================
+        // 🚀 BLOGS MODULE
+        // ===============================================
+        window.loadAdminBlogs = async function() {
             const list = document.getElementById('modal-blogs-list'); 
-            list.innerHTML = '<p style="text-align:center; padding: 20px;">Loading posts...</p>';
+            list.innerHTML = '<p style="text-align:center; padding: 40px; color: var(--text-muted);"><i class="fas fa-spinner fa-spin" style="font-size: 30px; color: #a855f7; margin-bottom: 15px; display: block;"></i> Loading posts...</p>';
             try {
                 const { data } = await supabaseClient.from('blogs').select('*').order('created_at', { ascending: false });
-                if (!data || data.length === 0) { list.innerHTML = "<p style='text-align:center; padding: 20px;'>No posts published yet.</p>"; return; }
+                if (!data || data.length === 0) { list.innerHTML = '<p style="text-align:center; padding: 40px; font-weight:600; color:var(--text-muted);">No posts published yet.</p>'; return; }
                 
-                list.innerHTML = "";
-                data.forEach(b => {
-                    // 🚀 THE FIX: Added regex to properly escape line breaks so the Edit button doesn't break
+                const htmlStrings = data.map(b => {
                     const sT = b.title ? b.title.replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/\n/g, '\\n').replace(/\r/g, '') : ''; 
                     const sS = b.snippet ? b.snippet.replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/\n/g, '\\n').replace(/\r/g, '') : ''; 
                     const sC = b.content ? b.content.replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/\n/g, '\\n').replace(/\r/g, '') : '';
                     
-                    list.innerHTML += `
-                        <div class="list-item">
-                            <div style="display:flex; gap:15px;">
-                                <img src="${b.image_url||'https://via.placeholder.com/100'}" style="width:70px;height:70px;object-fit:cover;border-radius:12px; border: 1px solid var(--border);">
-                                <div style="flex:1;">
-                                    <div class="item-title" style="margin-bottom: 2px;">${b.title}</div>
-                                    <div class="item-meta" style="margin-bottom: 5px;">${b.category} • ${new Date(b.created_at).toLocaleDateString()}</div>
-                                </div>
-                            </div>
-                            <div class="action-row">
-                                <button class="action-btn" style="background:#f1f5f9; color: var(--text-main);" onclick="editBlog('${b.id}', '${sT}', '${b.category}', '${sS}', '${sC}')"><i class="fas fa-pen"></i> Edit</button>
-                                <button class="action-btn btn-delete" onclick="deleteBlog('${b.id}')"><i class="fas fa-trash"></i> Delete</button>
-                            </div>
-                        </div>`;
+                    const img = escapeHTML(b.image_url || 'https://via.placeholder.com/100');
+
+                    return '<div class="list-item" style="border-left: 5px solid #a855f7;">' +
+                                '<div style="display:flex; gap:15px; align-items:center;">' +
+                                    '<img src="' + img + '" style="width:75px;height:75px;object-fit:cover;border-radius:14px; border: 1px solid var(--border);">' +
+                                    '<div style="flex:1;">' +
+                                        '<div class="item-title" style="margin-bottom: 4px; line-height:1.3;">' + escapeHTML(b.title) + '</div>' +
+                                        '<div class="item-meta" style="margin-bottom: 0;">' + escapeHTML(b.category) + ' &bull; ' + new Date(b.created_at).toLocaleDateString() + '</div>' +
+                                    '</div>' +
+                                '</div>' +
+                                '<div class="action-row">' +
+                                    '<button class="action-btn" style="background:var(--bg-color); color: var(--text-main); border: 1px solid var(--border);" onclick="editBlog(\'' + escapeJS(b.id) + '\', \'' + sT + '\', \'' + escapeJS(b.category) + '\', \'' + sS + '\', \'' + sC + '\')"><i class="fas fa-pen"></i> Edit</button>' +
+                                    '<button class="action-btn btn-delete" onclick="deleteBlog(\'' + escapeJS(b.id) + '\')"><i class="fas fa-trash"></i> Delete</button>' +
+                                '</div>' +
+                           '</div>';
                 });
+
+                list.innerHTML = htmlStrings.join('');
             } catch (e) { console.error(e); }
         }        
+        
         async function uploadImage(file) {
             const formData = new FormData(); 
             formData.append('file', file); 
             formData.append('upload_preset', 'afit_media');
-            const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: 'POST', body: formData });
+            const res = await fetch('https://api.cloudinary.com/v1_1/' + CLOUD_NAME + '/image/upload', { method: 'POST', body: formData });
             const data = await res.json(); 
             if(!res.ok) throw new Error(data.error.message);
             return data.secure_url;
@@ -718,7 +842,7 @@
             } catch(e) { 
                 alert("Error saving post."); 
             } finally { 
-                btn.innerText = "Publish Post"; 
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Publish Post'; 
                 btn.disabled = false; 
             }
         }
@@ -731,7 +855,7 @@
             document.getElementById('blogContent').value = cont; 
             
             document.getElementById('blogFormTitle').innerText = "Edit Existing Post";
-            document.getElementById('saveBlogBtn').innerText = "Update Post";
+            document.getElementById('saveBlogBtn').innerHTML = '<i class="fas fa-sync"></i> Update Post';
             document.getElementById('cancelEditBtn').style.display = 'block'; 
             
             document.querySelector('#blogModal .modal-content-scroll').scrollTop = 0;
@@ -757,34 +881,37 @@
             document.getElementById('blogImage').value = "";
             
             document.getElementById('blogFormTitle').innerText = "Create New Post";
-            document.getElementById('saveBlogBtn').innerText = "Publish Post";
+            document.getElementById('saveBlogBtn').innerHTML = '<i class="fas fa-paper-plane"></i> Publish Post';
             document.getElementById('cancelEditBtn').style.display = 'none'; 
         }
 
+        // ===============================================
+        // 🚀 NOTIFICATIONS MODULE
+        // ===============================================
         window.loadAdminNotifications = async function() {
             const list = document.getElementById('admin-notifs-list');
-            list.innerHTML = '<p style="text-align:center; padding: 20px;">Loading notifications...</p>';
+            list.innerHTML = '<p style="text-align:center; padding: 40px; color: var(--text-muted);"><i class="fas fa-spinner fa-spin" style="font-size: 30px; color: #f97316; margin-bottom: 15px; display: block;"></i> Loading notifications...</p>';
             try {
                 const { data } = await supabaseClient.from('notifications').select('*').order('created_at', { ascending: false });
-                if (!data || data.length === 0) { list.innerHTML = "<p style='text-align:center; padding: 20px;'>No past notifications.</p>"; return; }
+                if (!data || data.length === 0) { list.innerHTML = '<p style="text-align:center; padding: 40px; font-weight:600; color:var(--text-muted);">No past broadcasts.</p>'; return; }
                 
-                list.innerHTML = "";
-                data.forEach(n => {
-                    const target = n.user_id ? `<span style='color:#ef4444; font-weight:bold;'><i class="fas fa-lock"></i> Private (User: ${n.user_id.substring(0,8)}...)</span>` : `<span style='color:#10b981; font-weight:bold;'><i class="fas fa-globe"></i> GLOBAL BROADCAST</span>`;
+                const htmlStrings = data.map(n => {
+                    const target = n.user_id ? '<span style="color:#ef4444; font-weight:800;"><i class="fas fa-lock"></i> Private (User: ' + escapeHTML(n.user_id.substring(0,8)) + '...)</span>' : '<span style="color:#10b981; font-weight:800;"><i class="fas fa-globe"></i> GLOBAL BROADCAST</span>';
                     
-                    list.innerHTML += `
-                        <div class="list-item">
-                            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                                <div style="flex:1;">
-                                    <div class="item-title">${n.title} <span class="status-badge" style="background:#e2e8f0; color:#475569; margin-left:5px;">${n.type.toUpperCase()}</span></div>
-                                    <div class="item-meta">${target} • ${new Date(n.created_at).toLocaleDateString()}</div>
-                                    <div style="font-size:13px; color:var(--text-muted); background: #f8fafc; padding: 10px; border-radius: 8px;">${n.message}</div>
-                                </div>
-                                <button class="close-btn" style="background:#fef2f2; color:#ef4444; margin-left: 15px;" onclick="deleteNotification('${n.id}')"><i class="fas fa-trash"></i></button>
-                            </div>
-                        </div>`;
+                    return '<div class="list-item" style="border-left: 5px solid #f97316;">' +
+                                '<div style="display:flex; justify-content:space-between; align-items:flex-start;">' +
+                                    '<div style="flex:1;">' +
+                                        '<div class="item-title">' + escapeHTML(n.title) + ' <span class="status-badge" style="background:var(--border); color:var(--text-main); margin-left:5px;">' + escapeHTML(n.type.toUpperCase()) + '</span></div>' +
+                                        '<div class="item-meta" style="margin-bottom: 10px;">' + target + ' &bull; ' + new Date(n.created_at).toLocaleDateString() + '</div>' +
+                                        '<div style="font-size:13px; color:var(--text-muted); background: var(--bg-color); padding: 12px; border-radius: 10px; border: 1px solid var(--border); line-height: 1.5; font-weight: 500;">' + escapeHTML(n.message) + '</div>' +
+                                    '</div>' +
+                                    '<button class="close-btn" style="background:#fef2f2; color:#ef4444; margin-left: 15px; flex-shrink:0;" onclick="deleteNotification(\'' + escapeJS(n.id) + '\')"><i class="fas fa-trash"></i></button>' +
+                                '</div>' +
+                           '</div>';
                 });
-            } catch (e) { list.innerHTML = "<p style='color:red; text-align:center;'>Error loading notifications.</p>"; }
+
+                list.innerHTML = htmlStrings.join('');
+            } catch (e) { list.innerHTML = '<p style="color:red; text-align:center;">Error loading notifications.</p>'; }
         };
 
         window.sendNotification = async function() {
@@ -826,18 +953,21 @@
             }
         };
 
+        // ===============================================
+        // 🚀 PIN ITEMS MODULE
+        // ===============================================
         window.searchVendorItems = async function() {
             const query = document.getElementById('featured-search').value.toLowerCase().trim();
             const results = document.getElementById('featured-results');
             if(!query) return;
 
-            results.innerHTML = '<p style="text-align:center; padding: 20px;"><i class="fas fa-spinner fa-spin" style="color: var(--brand-color);"></i> Searching vendors...</p>';
+            results.innerHTML = '<p style="text-align:center; padding: 40px; color: var(--text-muted);"><i class="fas fa-spinner fa-spin" style="font-size: 30px; color: #3b82f6; margin-bottom: 15px; display: block;"></i> Searching vendors...</p>';
             
             try {
-                const { data: vendors } = await supabaseClient.from('vendors').select('id, business_name, vendor_code').or(`business_name.ilike.%${query}%,vendor_code.ilike.%${query}%`).limit(1);
+                const { data: vendors } = await supabaseClient.from('vendors').select('id, business_name, vendor_code').or('business_name.ilike.%' + query + '%,vendor_code.ilike.%' + query + '%').limit(1);
 
                 if (!vendors || vendors.length === 0) {
-                    results.innerHTML = "<p style='text-align:center; color:#ef4444; padding: 20px; background: #fef2f2; border-radius: 12px;'>No vendor found matching that search.</p>";
+                    results.innerHTML = '<p style="text-align:center; color:#ef4444; padding: 20px; background: rgba(239, 68, 68, 0.1); border-radius: 12px; font-weight: 600;">No vendor found matching that search.</p>';
                     return;
                 }
 
@@ -845,94 +975,92 @@
                 const { data: products } = await supabaseClient.from('products').select('*').eq('vendor_id', vendor.id).order('created_at', { ascending: false });
 
                 if (!products || products.length === 0) {
-                    results.innerHTML = `<h3 style="margin-bottom: 15px; font-size: 16px;">Items for ${vendor.business_name}</h3><p style='text-align:center; color:#94a3b8; padding: 20px;'>This vendor has no items posted.</p>`;
+                    results.innerHTML = '<h3 style="margin-bottom: 15px; font-size: 16px; font-weight: 800; color: var(--text-main);">Items for ' + escapeHTML(vendor.business_name) + '</h3><p style="text-align:center; color:#94a3b8; padding: 40px; font-weight: 600;">This vendor has no items posted.</p>';
                     return;
                 }
 
-                results.innerHTML = `<h3 style="margin-bottom: 15px; font-size: 16px;">Items for ${vendor.business_name}</h3>`;
+                let htmlContent = '<h3 style="margin-bottom: 20px; font-size: 16px; font-weight: 800; color: var(--text-main);">Items for ' + escapeHTML(vendor.business_name) + '</h3>';
                 
-                products.forEach(p => {
+                const htmlStrings = products.map(p => {
                     const isPinned = p.is_pinned === true;
                     const imgUrl = (p.image_urls && p.image_urls.length > 0) ? p.image_urls[0] : 'https://via.placeholder.com/100';
                     const btnText = isPinned ? '<i class="fas fa-thumbtack"></i> Unpin Item' : '<i class="fas fa-thumbtack"></i> Pin to Top';
                     const btnClass = isPinned ? 'btn-delete' : 'btn-approve';
-                    const badge = isPinned ? '<span class="status-badge" style="background:#eff6ff; color:#3b82f6; margin-left: 5px;">PINNED</span>' : '';
+                    const badge = isPinned ? '<span class="status-badge" style="background:#eff6ff; color:#3b82f6; margin-left: 5px; border: 1px solid #bfdbfe;">PINNED</span>' : '';
 
-                    results.innerHTML += `
-                        <div class="list-item" style="border-left: 4px solid ${isPinned ? '#3b82f6' : '#e2e8f0'};">
-                            <div style="display:flex; gap:15px; align-items: center;">
-                                <img src="${imgUrl}" style="width:60px;height:60px;object-fit:cover;border-radius:10px; border: 1px solid var(--border);">
-                                <div style="flex:1;">
-                                    <div class="item-title" style="margin-bottom: 2px;">${p.name} ${badge}</div>
-                                    <div class="item-meta" style="margin-bottom: 0;">${p.category} • ₦${p.price}</div>
-                                </div>
-                            </div>
-                            <div class="action-row">
-                                <button class="action-btn ${btnClass}" onclick="togglePin('${p.id}', ${!isPinned})">${btnText}</button>
-                            </div>
-                        </div>`;
+                    return '<div class="list-item" style="border-left: 5px solid ' + (isPinned ? '#3b82f6' : '#e2e8f0') + ';">' +
+                                '<div style="display:flex; gap:15px; align-items: center;">' +
+                                    '<img src="' + escapeHTML(imgUrl) + '" style="width:70px;height:70px;object-fit:cover;border-radius:12px; border: 1px solid var(--border);">' +
+                                    '<div style="flex:1;">' +
+                                        '<div class="item-title" style="margin-bottom: 4px;">' + escapeHTML(p.name) + ' ' + badge + '</div>' +
+                                        '<div class="item-meta" style="margin-bottom: 0;"><i class="fas fa-layer-group" style="color:var(--brand-color);"></i> ' + escapeHTML(p.category) + ' &bull; ₦' + p.price + '</div>' +
+                                    '</div>' +
+                                '</div>' +
+                                '<div class="action-row">' +
+                                    '<button class="action-btn ' + btnClass + '" onclick="togglePin(\'' + escapeJS(p.id) + '\', ' + !isPinned + ')">' + btnText + '</button>' +
+                                '</div>' +
+                           '</div>';
                 });
-            } catch(e) { results.innerHTML = "<p style='color:red;'>Search failed. Check console.</p>"; }
+
+                results.innerHTML = htmlContent + htmlStrings.join('');
+            } catch(e) { results.innerHTML = '<p style="color:red; text-align:center;">Search failed. Check console.</p>'; }
         }
 
-       window.togglePin = async function(productId, newState) {
+        window.togglePin = async function(productId, newState) {
             try {
-                // We added error checking here so it doesn't fail silently
                 const { error } = await supabaseClient.from('products').update({ is_pinned: newState }).eq('id', productId);
                 if (error) throw error;
-                
                 searchVendorItems(); 
             } catch(e) { 
                 alert("Failed to pin item: " + e.message); 
-                console.error(e);
             }
         }
 
         // ===============================================
-        // 🚀 NEW: PIN VENDORS MODULE
+        // 🚀 PIN VENDORS MODULE
         // ===============================================
         window.searchPinVendors = async function() {
             const query = document.getElementById('pin-vendor-search').value.toLowerCase().trim();
             const results = document.getElementById('pin-vendor-results');
             if(!query) return;
 
-            results.innerHTML = '<p style="text-align:center; padding: 20px;"><i class="fas fa-spinner fa-spin" style="color: var(--brand-color);"></i> Searching vendors...</p>';
+            results.innerHTML = '<p style="text-align:center; padding: 40px; color: var(--text-muted);"><i class="fas fa-spinner fa-spin" style="font-size: 30px; color: #f97316; margin-bottom: 15px; display: block;"></i> Searching vendors...</p>';
             
             try {
                 const { data: vendors, error } = await supabaseClient.from('vendors')
                     .select('id, business_name, vendor_code, logo_url, is_pinned')
-                    .or(`business_name.ilike.%${query}%,vendor_code.ilike.%${query}%`);
+                    .or('business_name.ilike.%' + query + '%,vendor_code.ilike.%' + query + '%');
 
                 if (error) throw error;
                 if (!vendors || vendors.length === 0) {
-                    results.innerHTML = "<p style='text-align:center; color:#ef4444; padding: 20px; background: #fef2f2; border-radius: 12px;'>No vendor found matching that search.</p>";
+                    results.innerHTML = '<p style="text-align:center; color:#ef4444; padding: 20px; background: rgba(239, 68, 68, 0.1); border-radius: 12px; font-weight: 600;">No vendor found matching that search.</p>';
                     return;
                 }
 
-                results.innerHTML = "";
-                vendors.forEach(v => {
+                const htmlStrings = vendors.map(v => {
                     const isPinned = v.is_pinned === true;
-                    const imgUrl = v.logo_url || 'https://via.placeholder.com/100';
+                    const imgUrl = escapeHTML(v.logo_url || 'https://via.placeholder.com/100');
                     const btnText = isPinned ? '<i class="fas fa-thumbtack"></i> Unpin Vendor' : '<i class="fas fa-thumbtack"></i> Pin Vendor';
                     const btnClass = isPinned ? 'btn-delete' : 'btn-approve';
-                    const badge = isPinned ? '<span class="status-badge" style="background:#fff7ed; color:#ea580c; margin-left: 5px;">PINNED</span>' : '';
+                    const badge = isPinned ? '<span class="status-badge" style="background:#fff7ed; color:#ea580c; margin-left: 5px; border: 1px solid #fed7aa;">PINNED</span>' : '';
 
-                    results.innerHTML += `
-                        <div class="list-item" style="border-left: 4px solid ${isPinned ? '#ea580c' : '#e2e8f0'};">
-                            <div style="display:flex; gap:15px; align-items: center;">
-                                <img src="${imgUrl}" style="width:60px;height:60px;object-fit:cover;border-radius:10px; border: 1px solid var(--border);">
-                                <div style="flex:1;">
-                                    <div class="item-title" style="margin-bottom: 2px;">${v.business_name} ${badge}</div>
-                                    <div class="item-meta" style="margin-bottom: 0;">Code: ${v.vendor_code}</div>
-                                </div>
-                            </div>
-                            <div class="action-row">
-                                <button class="action-btn ${btnClass}" onclick="toggleVendorPin('${v.id}', ${!isPinned})">${btnText}</button>
-                            </div>
-                        </div>`;
+                    return '<div class="list-item" style="border-left: 5px solid ' + (isPinned ? '#ea580c' : '#e2e8f0') + ';">' +
+                                '<div style="display:flex; gap:15px; align-items: center;">' +
+                                    '<img src="' + imgUrl + '" style="width:70px;height:70px;object-fit:cover;border-radius:14px; border: 1px solid var(--border);">' +
+                                    '<div style="flex:1;">' +
+                                        '<div class="item-title" style="margin-bottom: 4px;">' + escapeHTML(v.business_name) + ' ' + badge + '</div>' +
+                                        '<div class="item-meta" style="margin-bottom: 0;"><i class="fas fa-id-badge" style="color:#f97316;"></i> Code: ' + escapeHTML(v.vendor_code) + '</div>' +
+                                    '</div>' +
+                                '</div>' +
+                                '<div class="action-row">' +
+                                    '<button class="action-btn ' + btnClass + '" onclick="toggleVendorPin(\'' + escapeJS(v.id) + '\', ' + !isPinned + ')">' + btnText + '</button>' +
+                                '</div>' +
+                           '</div>';
                 });
+
+                results.innerHTML = htmlStrings.join('');
             } catch(e) { 
-                results.innerHTML = "<p style='color:red;'>Search failed. Check console.</p>"; 
+                results.innerHTML = '<p style="color:red; text-align:center;">Search failed. Check console.</p>'; 
             }
         }
 
@@ -940,46 +1068,45 @@
             try {
                 const { error } = await supabaseClient.from('vendors').update({ is_pinned: newState }).eq('id', vendorId);
                 if (error) throw error;
-                
                 searchPinVendors(); 
             } catch(e) { 
                 alert("Failed to pin/unpin vendor: " + e.message); 
-                console.error(e);
             }
         }
 
         // ===============================================
-        // 🚀 NEW: AD POPUPS MODULE
+        // 🚀 AD POPUPS MODULE
         // ===============================================
         window.loadAdminAds = async function() {
             const list = document.getElementById('modal-ads-list');
-            list.innerHTML = '<p style="text-align:center; padding: 20px;">Loading ads...</p>';
+            list.innerHTML = '<p style="text-align:center; padding: 40px; color: var(--text-muted);"><i class="fas fa-spinner fa-spin" style="font-size: 30px; color: #14b8a6; margin-bottom: 15px; display: block;"></i> Loading ads...</p>';
             try {
                 const { data } = await supabaseClient.from('ads').select('*').order('created_at', { ascending: false });
-                if (!data || data.length === 0) { list.innerHTML = "<p style='text-align:center; padding: 20px;'>No ads created yet.</p>"; return; }
+                if (!data || data.length === 0) { list.innerHTML = '<p style="text-align:center; padding: 40px; font-weight:600; color:var(--text-muted);">No ads created yet.</p>'; return; }
                 
-                list.innerHTML = "";
-                data.forEach(a => {
+                const htmlStrings = data.map(a => {
                     const isActive = a.is_active;
-                    const statusBadge = isActive ? `<span class="status-badge" style="background:#ecfdf5; color:#10b981;">ACTIVE</span>` : `<span class="status-badge" style="background:#fef2f2; color:#ef4444;">INACTIVE</span>`;
+                    const statusBadge = isActive ? '<span class="status-badge" style="background:#ecfdf5; color:#10b981; border: 1px solid #a7f3d0; margin-left: 5px;">ACTIVE</span>' : '<span class="status-badge" style="background:#fef2f2; color:#ef4444; border: 1px solid #fecaca; margin-left: 5px;">INACTIVE</span>';
+                    const imgHtml = a.image_url ? '<img src="' + escapeHTML(a.image_url) + '" style="width:70px;height:70px;object-fit:cover;border-radius:14px; border: 1px solid var(--border);">' : '';
                     
-                    list.innerHTML += `
-                        <div class="list-item" style="border-left: 4px solid ${isActive ? '#14b8a6' : '#ef4444'};">
-                            <div style="display:flex; gap:15px;">
-                                ${a.image_url ? `<img src="${a.image_url}" style="width:60px;height:60px;object-fit:cover;border-radius:10px; border: 1px solid var(--border);">` : ''}
-                                <div style="flex:1;">
-                                    <div class="item-title" style="margin-bottom: 2px;">${a.title} ${statusBadge}</div>
-                                    <div class="item-meta" style="margin-bottom: 5px;">Link: ${a.button_link || 'None'}</div>
-                                </div>
-                            </div>
-                            <div class="action-row">
-                                <button class="action-btn ${isActive ? 'btn-suspend' : 'btn-approve'}" onclick="toggleAdStatus('${a.id}', ${!isActive})">
-                                    <i class="fas ${isActive ? 'fa-ban' : 'fa-check'}"></i> ${isActive ? 'Deactivate' : 'Activate'}
-                                </button>
-                                <button class="action-btn btn-delete" onclick="deleteAd('${a.id}')"><i class="fas fa-trash"></i> Delete</button>
-                            </div>
-                        </div>`;
+                    return '<div class="list-item" style="border-left: 5px solid ' + (isActive ? '#14b8a6' : '#ef4444') + ';">' +
+                                '<div style="display:flex; gap:15px; align-items:center;">' +
+                                    imgHtml +
+                                    '<div style="flex:1;">' +
+                                        '<div class="item-title" style="margin-bottom: 4px;">' + escapeHTML(a.title) + ' ' + statusBadge + '</div>' +
+                                        '<div class="item-meta" style="margin-bottom: 5px;"><i class="fas fa-link" style="color:#14b8a6;"></i> Link: ' + escapeHTML(a.button_link || 'None') + '</div>' +
+                                    '</div>' +
+                                '</div>' +
+                                '<div class="action-row">' +
+                                    '<button class="action-btn ' + (isActive ? 'btn-suspend' : 'btn-approve') + '" onclick="toggleAdStatus(\'' + escapeJS(a.id) + '\', ' + !isActive + ')">' +
+                                        '<i class="fas ' + (isActive ? 'fa-ban' : 'fa-check') + '"></i> ' + (isActive ? 'Deactivate' : 'Activate') +
+                                    '</button>' +
+                                    '<button class="action-btn btn-delete" onclick="deleteAd(\'' + escapeJS(a.id) + '\')"><i class="fas fa-trash"></i> Delete</button>' +
+                                '</div>' +
+                           '</div>';
                 });
+
+                list.innerHTML = htmlStrings.join('');
             } catch (e) { console.error(e); }
         }
 
