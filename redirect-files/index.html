@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>We have moved! | BRYT DGM</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- SEO Meta to tell Google this is a permanent move -->
+    <meta http-equiv="refresh" content="5;url=https://brytdgm.name.ng/">
+    <link rel="canonical" href="https://brytdgm.name.ng/">
+
+    <style>
+        :root {
+            --brand-color: #1D5ED0;
+            --navy-deep: #071A3A;
+            --bg-color: #F5F8FC;
+            --text-main: #0B1220;
+            --text-muted: #64748b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Sora', sans-serif; }
+        
+        body { 
+            background-color: var(--navy-deep); 
+            display: flex; justify-content: center; align-items: center; 
+            min-height: 100vh; padding: 20px;
+        }
+
+        .container {
+            background: white; width: 100%; max-width: 450px;
+            padding: 40px 30px; border-radius: 24px; text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .icon-box {
+            width: 80px; height: 80px; background: rgba(29, 94, 208, 0.1);
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            font-size: 35px; color: var(--brand-color);
+            margin: 0 auto 20px;
+        }
+
+        h1 { font-size: 24px; font-weight: 800; color: var(--text-main); margin-bottom: 10px; letter-spacing: -0.5px;}
+        p { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 25px; font-weight: 500;}
+
+        .highlight { color: var(--brand-color); font-weight: 800; }
+
+        .timer-box {
+            background: #eff6ff; border: 1px solid #bfdbfe; color: var(--brand-color);
+            padding: 15px 20px; border-radius: 14px; font-size: 14px; font-weight: 800;
+            margin-bottom: 25px; display: inline-flex; align-items: center; gap: 8px;
+        }
+
+        .btn {
+            background: var(--brand-color); color: white; border: none; text-decoration: none;
+            width: 100%; padding: 16px; border-radius: 16px; font-size: 15px; font-weight: 800;
+            cursor: pointer; transition: 0.2s; box-shadow: 0 8px 25px rgba(29, 94, 208, 0.3);
+            display: inline-flex; justify-content: center; align-items: center; gap: 10px;
+        }
+        .btn:active { transform: scale(0.96); box-shadow: 0 4px 10px rgba(29, 94, 208, 0.2);}
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="icon-box">
+            <i class="fas fa-rocket"></i>
+        </div>
+        <h1>We Have Rebranded!</h1>
+        <p>AFIT Digital Market has officially upgraded to <span class="highlight">BRYT DGM</span>. You are being redirected to our new, faster, and better home.</p>
+        
+        <div class="timer-box">
+            <i class="fas fa-spinner fa-spin"></i> Redirecting in <span id="countdown">5</span> seconds
+        </div>
+        
+        <a href="https://brytdgm.name.ng/" class="btn" id="manual-btn">
+            Take Me There Now <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <script>
+        // Set the destination URL
+        const newDomain = "https://brytdgm.name.ng/";
+        
+        // Timer Logic
+        let timeLeft = 5;
+        const countdownEl = document.getElementById('countdown');
+        const manualBtn = document.getElementById('manual-btn');
+        
+        // Grab the exact path the user was trying to reach (e.g., /product/index.html?id=123)
+        const pathAndQuery = window.location.pathname + window.location.search;
+        let finalDestination = newDomain;
+        
+        if (pathAndQuery !== "/" && pathAndQuery !== "") {
+            finalDestination = newDomain.replace(/\/$/, '') + pathAndQuery;
+        }
+
+        // Update the manual button to point exactly to their intended destination
+        manualBtn.href = finalDestination;
+        
+        const timer = setInterval(() => {
+            timeLeft--;
+            if (countdownEl) {
+                countdownEl.innerText = timeLeft;
+            }
+            
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                window.location.href = finalDestination;
+            }
+        }, 1000);
+    </script>
+
+</body>
+</html>

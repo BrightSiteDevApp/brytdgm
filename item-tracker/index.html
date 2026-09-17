@@ -3,26 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Item Tracker | AFIT Admin</title>
+    <title>Item Tracker | BRYT Admin</title>
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../asset/style.css">
-    <link rel="icon" href="../asset/img/app-logo.png" type="image/png" sizes="192x192">
+    <link rel="icon" href="../asset/img/bryt-app-logo.png" type="image/png" sizes="192x192">
 
     <style>
-        /* 🚀 EXACT AFIT BLUE VARIABLES */
+        /* 🚀 BRYT TECHNOLOGIES VARIABLES */
         :root {
-            --brand-color: #2d8eff;
-            --brand-hover: #1a73e8;
-            --text-main: #0f172a;
+            --brand-color: #1D5ED0; 
+            --brand-hover: #159FE3;
+            --navy-deep: #071A3A;
+            --text-main: #0B1220;
             --text-muted: #64748b;
             --bg-card: #ffffff;
             --border-color: #e2e8f0;
-            --shadow-sm: 0 4px 15px rgba(0,0,0,0.03);
+            --shadow-sm: 0 4px 15px rgba(11, 18, 32, 0.03);
         }
 
-        body, html { background: #f8fafc; margin: 0; padding: 0; font-family: 'Poppins', sans-serif;}
+        body, html { background: #F5F8FC; margin: 0; padding: 0; font-family: 'Sora', sans-serif;}
         .app-container { padding-bottom: 40px; min-height: 100vh; position: relative; }
 
         /* 🚀 STICKY HEADER */
@@ -30,10 +32,10 @@
             position: sticky; top: 0; width: 100%; 
             display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; 
             z-index: 1000; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03); box-sizing: border-box;
+            box-shadow: 0 2px 10px rgba(11, 18, 32, 0.03); box-sizing: border-box;
         }
         .icon-btn-overlay { 
-            background: #f1f5f9; color: var(--text-main); width: 40px; height: 40px; border-radius: 50%; 
+            background: #F5F8FC; color: var(--text-main); width: 40px; height: 40px; border-radius: 50%; 
             display: flex; justify-content: center; align-items: center; border: none; 
             font-size: 16px; cursor: pointer; transition: 0.2s; 
         }
@@ -42,7 +44,7 @@
         /* 🚀 ADMIN SECURE LOADER */
         #admin-loader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #f8fafc; z-index: 5000; display: flex; flex-direction: column;
+            background: #F5F8FC; z-index: 5000; display: flex; flex-direction: column;
             justify-content: center; align-items: center; color: var(--brand-color);
         }
         .spinner { width: 45px; height: 45px; border: 4px solid #e2e8f0; border-top-color: var(--brand-color); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 15px;}
@@ -53,30 +55,30 @@
         
         .tracker-card {
             background: white; border-radius: 20px; padding: 25px 20px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;
+            box-shadow: 0 10px 30px rgba(11, 18, 32, 0.04); border: 1px solid #e2e8f0;
             margin-bottom: 25px;
         }
 
-        .section-title { font-size: 18px; font-weight: 900; color: var(--text-main); margin: 0 0 20px; display: flex; align-items: center; gap: 8px;}
+        .section-title { font-size: 18px; font-weight: 800; color: var(--text-main); margin: 0 0 20px; display: flex; align-items: center; gap: 8px; letter-spacing: -0.5px;}
         
         .form-group { margin-bottom: 15px; }
         .form-label { display: block; font-size: 12px; font-weight: 800; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;}
         .form-input { 
             width: 100%; padding: 14px 16px; border: 2px solid #e2e8f0; border-radius: 12px; 
-            font-size: 14px; background: #f8fafc; outline: none; transition: 0.2s; box-sizing: border-box; font-family: inherit;
+            font-size: 14px; background: #F5F8FC; outline: none; transition: 0.2s; box-sizing: border-box; font-family: 'Sora', sans-serif; font-weight: 500;
         }
-        .form-input:focus { border-color: var(--brand-color); background: white; }
+        .form-input:focus { border-color: var(--brand-color); background: white; box-shadow: 0 4px 15px rgba(29, 94, 208, 0.1);}
 
         .submit-btn { 
             background: var(--brand-color); color: white; width: 100%; padding: 15px; 
-            border: none; border-radius: 12px; font-weight: 800; font-size: 15px; 
-            cursor: pointer; box-shadow: 0 4px 15px rgba(45, 142, 255, 0.3); transition: 0.2s; margin-top: 10px;
+            border: none; border-radius: 12px; font-weight: 800; font-family: 'Sora', sans-serif; font-size: 15px; 
+            cursor: pointer; box-shadow: 0 4px 15px rgba(29, 94, 208, 0.3); transition: 0.2s; margin-top: 10px;
         }
-        .submit-btn:active { transform: scale(0.98); }
+        .submit-btn:active { transform: scale(0.98); box-shadow: 0 2px 8px rgba(29, 94, 208, 0.2);}
         
         .cancel-btn { 
             background: #fef2f2; color: #ef4444; width: 100%; padding: 15px; 
-            border: none; border-radius: 12px; font-weight: 800; font-size: 15px; 
+            border: none; border-radius: 12px; font-weight: 800; font-family: 'Sora', sans-serif; font-size: 15px; 
             cursor: pointer; transition: 0.2s; margin-top: 10px; display: none;
         }
         .cancel-btn:active { transform: scale(0.98); background: #fee2e2; }
@@ -90,18 +92,18 @@
         .search-btn:active { transform: scale(0.95); }
 
         .result-box {
-            background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; 
+            background: #F5F8FC; border: 1px solid #e2e8f0; border-radius: 16px; 
             padding: 20px; display: none; margin-top: 10px;
         }
-        .r-title { font-size: 16px; font-weight: 800; color: var(--text-main); margin: 0 0 15px; line-height: 1.4;}
+        .r-title { font-size: 16px; font-weight: 800; color: var(--text-main); margin: 0 0 15px; line-height: 1.4; letter-spacing: -0.3px;}
         .r-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #e2e8f0;}
         .r-label { font-size: 12px; color: var(--text-muted); font-weight: 600;}
         .r-val-strike { font-size: 14px; color: #ef4444; font-weight: 700; text-decoration: line-through; }
-        .r-val-green { font-size: 18px; color: #10b981; font-weight: 900; }
+        .r-val-green { font-size: 18px; color: #10b981; font-weight: 800; }
         
         .copy-btn { 
             background: #eff6ff; color: var(--brand-color); width: 100%; padding: 12px; 
-            border: 2px solid #bfdbfe; border-radius: 10px; font-weight: 800; font-size: 14px; 
+            border: 2px solid #bfdbfe; border-radius: 10px; font-weight: 800; font-family: 'Sora', sans-serif; font-size: 14px; 
             cursor: pointer; transition: 0.2s; display: flex; justify-content: center; align-items: center; gap: 8px;
             margin-top: 15px;
         }
@@ -109,27 +111,27 @@
         
         .edit-btn { 
             background: #fffbeb; color: #f59e0b; width: 100%; padding: 12px; 
-            border: 2px solid #fde68a; border-radius: 10px; font-weight: 800; font-size: 14px; 
+            border: 2px solid #fde68a; border-radius: 10px; font-weight: 800; font-family: 'Sora', sans-serif; font-size: 14px; 
             cursor: pointer; transition: 0.2s; display: flex; justify-content: center; align-items: center; gap: 8px;
             margin-top: 10px;
         }
         .edit-btn:active { transform: scale(0.96); background: #f59e0b; color: white; border-color: #f59e0b; }
 
-        /* 🌙 DARK MODE FIXES */
-        body.dark-mode { background-color: #020617 !important; }
-        body.dark-mode .app-container { background: #020617 !important; }
-        body.dark-mode #admin-loader { background: #020617 !important; }
-        body.dark-mode .sticky-top-bar { background: rgba(15, 23, 42, 0.95) !important; border-bottom: 1px solid #334155; box-shadow: none; }
-        body.dark-mode .icon-btn-overlay { background: #1e293b !important; color: #f1f5f9 !important; }
-        body.dark-mode .tracker-card { background: #0f172a !important; border-color: #334155 !important; box-shadow: none;}
+        /* 🌙 DARK MODE FIXES (BRYT NAVY THEME) */
+        body.dark-mode { background-color: #071A3A !important; }
+        body.dark-mode .app-container { background: #071A3A !important; }
+        body.dark-mode #admin-loader { background: #071A3A !important; }
+        body.dark-mode .sticky-top-bar { background: rgba(11, 18, 32, 0.95) !important; border-bottom: 1px solid #1a2c4d; box-shadow: none; }
+        body.dark-mode .icon-btn-overlay { background: #0B1220 !important; color: #f1f5f9 !important; }
+        body.dark-mode .tracker-card { background: #0B1220 !important; border-color: #1a2c4d !important; box-shadow: none;}
         body.dark-mode .section-title, body.dark-mode .r-title { color: #f1f5f9 !important; }
-        body.dark-mode .form-input { background: #1e293b !important; border-color: #334155 !important; color: white;}
-        body.dark-mode .result-box { background: #1e293b !important; border-color: #334155 !important; }
-        body.dark-mode .r-flex { border-bottom-color: #334155 !important; }
-        body.dark-mode .copy-btn { background: #0f172a !important; border-color: #334155 !important; color: var(--brand-color); }
-        body.dark-mode .edit-btn { background: #0f172a !important; border-color: #334155 !important; color: #f59e0b; }
+        body.dark-mode .form-input { background: #071A3A !important; border-color: #1a2c4d !important; color: white;}
+        body.dark-mode .result-box { background: #071A3A !important; border-color: #1a2c4d !important; }
+        body.dark-mode .r-flex { border-bottom-color: #1a2c4d !important; }
+        body.dark-mode .copy-btn { background: #0B1220 !important; border-color: #1a2c4d !important; color: var(--brand-color); }
+        body.dark-mode .edit-btn { background: #0B1220 !important; border-color: #1a2c4d !important; color: #f59e0b; }
         body.dark-mode .search-btn { background: var(--brand-color) !important; }
-        body.dark-mode .cancel-btn { background: #1e293b !important; color: #ef4444 !important; }
+        body.dark-mode .cancel-btn { background: #0B1220 !important; color: #ef4444 !important; border: 1px solid #1a2c4d !important;}
     </style>
 </head>
 <body>
@@ -147,7 +149,7 @@
         
         <div class="sticky-top-bar">
             <button class="icon-btn-overlay" onclick="window.history.back()"><i class="fas fa-arrow-left"></i></button>
-            <div style="font-weight: 800; font-size: 16px; color: var(--text-main);">Item Tracker</div>
+            <div style="font-weight: 800; font-size: 16px; color: var(--text-main); letter-spacing: -0.3px;">Item Tracker</div>
             <div style="width: 40px;"></div> <!-- Spacer for center alignment -->
         </div>
 

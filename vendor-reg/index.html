@@ -2,27 +2,20 @@
 <html lang="en">
 <head>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-70VSGR5WBW"></script>
-    
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <title>Vendor Registration | Sell on BRYT DGM</title>
-    <meta name="description" content="Become a verified vendor on BRYT DGM. Register your student business, set up your digital storefront, and start selling to the campus community today.">
-    <link rel="canonical" href="https://brytdgm.name.ng/vendor-reg/">
-
+    
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- 🚀 PAYSTACK SCRIPT -->
     <script src="https://js.paystack.co/v1/inline.js"></script>
     
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../asset/style.css">
-    <link rel="icon" href="../asset/img/bryt-app-logo.png" type="image/png" sizes="192x192">
-    <link rel="icon" href="../favicon.ico" type="image/x-icon">
-
+    
     <style>
-        /* 🚀 BRYT TECHNOLOGIES VARIABLES */
         :root {
             --brand-color: #1D5ED0; 
             --brand-hover: #159FE3;
@@ -33,27 +26,32 @@
 
         body, html { background: #F5F8FC; margin: 0; padding: 0; font-family: 'Sora', sans-serif;}
         .app-container { padding-bottom: 90px; min-height: 100vh; position: relative; }
-
         .header-top-flex { display: flex; align-items: center; gap: 15px; margin-bottom: 2px; }
         .page-title { font-size: 20px; font-weight: 800; color: var(--text-main); margin: 0; letter-spacing: -0.5px;}
         
-        /* 🚀 UPDATED PRICING CARD (BRYT Identity) */
-        .premium-card { background: linear-gradient(135deg, var(--navy-deep), #0B1220); color: white; padding: 25px 20px; border-radius: 20px; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(11, 18, 32, 0.15); position: relative; overflow: hidden; border: 1px solid #1a2c4d;}
-        .premium-card::before { content: '\f00c'; font-family: 'Font Awesome 5 Free'; font-weight: 900; position: absolute; right: -20px; top: -10px; font-size: 100px; opacity: 0.05; color: var(--brand-hover); }
+        .pricing-tier {
+            background: #ffffff;
+            border: 2px solid var(--brand-color);
+            border-radius: 20px;
+            padding: 30px 25px;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(29, 94, 208, 0.12);
+        }
+        .pricing-tier .badge {
+            position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+            background: var(--brand-color); color: white; padding: 6px 18px; border-radius: 20px;
+            font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(29, 94, 208, 0.3);
+        }
+        .pricing-tier h2 { font-size: 38px; color: var(--text-main); margin: 15px 0 5px; font-weight: 800; letter-spacing: -1px; }
+        .pricing-tier .subtitle { font-size: 14px; font-weight: 600; color: var(--text-muted); margin-bottom: 25px; }
         
-        .premium-badge { display: inline-block; background: rgba(29, 94, 208, 0.2); color: var(--brand-hover); font-size: 11px; font-weight: 800; padding: 5px 12px; border-radius: 20px; text-transform: uppercase; margin-bottom: 10px; }
-        .price-text { font-size: 32px; font-weight: 800; margin-bottom: 5px; color: #ffffff; letter-spacing: -1px;}
-        .price-sub { font-size: 13px; color: #94a3b8; font-weight: 600; margin-bottom: 20px; }
-        
-        .perks-list { list-style: none; padding: 0; margin: 0 0 20px 0; font-size: 13px; color: #e2e8f0; font-weight: 500;}
-        .perks-list li { margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-        .perks-list i { color: var(--brand-hover); }
+        .pricing-tier ul { list-style: none; padding: 0; margin: 0 0 20px; text-align: left; }
+        .pricing-tier ul li { font-size: 14px; font-weight: 600; color: var(--text-main); margin-bottom: 14px; display: flex; align-items: center; gap: 12px; }
+        .pricing-tier ul li i { color: #10b981; font-size: 18px; background: #ecfdf5; padding: 5px; border-radius: 50%; }
 
-        .payment-box { background: rgba(255, 255, 255, 0.05); border: 1px dashed rgba(255, 255, 255, 0.2); padding: 12px; border-radius: 12px; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .payment-box i { color: #10b981; font-size: 18px; }
-        .bank-name { font-size: 13px; color: #cbd5e1; font-weight: 700; }
-
-        /* Form Styling */
         .form-section-title { font-size: 15px; font-weight: 800; color: var(--text-main); margin: 30px 0 15px; display: flex; align-items: center; gap: 8px; }
         .form-group { margin-bottom: 20px; }
         .form-label { display: block; font-size: 13px; font-weight: 800; color: var(--text-main); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;}
@@ -65,57 +63,47 @@
         .cat-checkbox:checked + .chip-label { background: #eff6ff; color: var(--brand-color); border-color: var(--brand-color); box-shadow: 0 4px 10px rgba(29, 94, 208, 0.15); }
         .cat-checkbox { display: none; }
 
-        /* Modern File Upload */
         .file-upload-box { border: 2px dashed #cbd5e1; border-radius: 16px; padding: 25px; text-align: center; cursor: pointer; background: white; position: relative; transition: 0.2s; }
         .file-upload-box:hover { border-color: var(--brand-color); background: #F5F8FC; }
         .file-upload-box input { position: absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor:pointer; }
         .file-upload-box.has-file { border-style: solid; border-color: #10b981; background: #ecfdf5; }
 
-        /* Terms Checkbox Styles */
         .terms-group { display: flex; align-items: flex-start; gap: 10px; margin-top: 25px; margin-bottom: 15px; }
-        .terms-checkbox { margin-top: 2px; cursor: pointer; accent-color: var(--brand-color); width: 16px; height: 16px; flex-shrink: 0; }
+        .terms-checkbox { margin-top: 2px; cursor: pointer; width: 16px; height: 16px; flex-shrink: 0; }
         .terms-label { font-size: 13px; font-weight: 600; color: var(--text-muted); line-height: 1.4; cursor: pointer; }
-        .terms-label a { color: var(--brand-color); font-weight: 800; text-decoration: none; transition: 0.2s; }
-        .terms-label a:hover { text-decoration: underline; }
+        .terms-label a { color: var(--brand-color); font-weight: 800; text-decoration: none; }
 
-        /* 🚀 FIXED SUBMIT BUTTON */
-        .submit-btn { background: var(--brand-color); color: white; width: 100%; padding: 18px; border: none; border-radius: 16px; font-weight: 800; font-family: 'Sora', sans-serif; font-size: 16px; cursor: pointer; box-shadow: 0 4px 15px rgba(29, 94, 208, 0.3); transition: 0.2s; }
-        .submit-btn:active { transform: scale(0.98); box-shadow: 0 2px 8px rgba(29, 94, 208, 0.2);}
-        .submit-btn:disabled { background: #94a3b8; box-shadow: none; cursor: not-allowed; transform: none; }
+        .submit-btn { width: 100%; padding: 16px; border: none; border-radius: 14px; font-weight: 800; font-family: 'Sora', sans-serif; font-size: 15px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;}
+        .submit-btn:active { transform: scale(0.98); }
+        .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+        
+        .btn-bryt { background: #0B1220; color: #ffffff; box-shadow: 0 4px 15px rgba(11, 18, 32, 0.2); }
+        .btn-bryt:hover { background: #1D5ED0; }
+        .btn-paystack { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
 
-        /* Loading Screen */
         #auth-check-loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center; }
         .spinner { width: 40px; height: 40px; border: 4px solid #e2e8f0; border-top-color: var(--brand-color); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* 🌙 DARK MODE FIXES (BRYT NAVY THEME) */
-        body.dark-mode { background-color: #071A3A !important; }
-        body.dark-mode .app-container { background: #0B1220 !important; }
-        body.dark-mode .header { background: #0B1220 !important; box-shadow: 0 2px 10px rgba(0,0,0,0.5) !important; border-bottom: 1px solid #1a2c4d; }
-        body.dark-mode .page-title, body.dark-mode .fa-arrow-left, body.dark-mode .form-section-title { color: #f1f5f9 !important; }
-        body.dark-mode .form-label { color: #cbd5e1 !important; }
-        body.dark-mode .form-input { background: #071A3A !important; color: #f1f5f9 !important; border-color: #1a2c4d !important; }
-        body.dark-mode .form-input:focus { border-color: var(--brand-color) !important; }
-        body.dark-mode .chip-label { background: #071A3A !important; border-color: #1a2c4d !important; color: #94a3b8 !important; }
-        body.dark-mode .cat-checkbox:checked + .chip-label { background: rgba(29, 94, 208, 0.1) !important; color: var(--brand-hover) !important; border-color: var(--brand-color) !important; }
-        body.dark-mode .file-upload-box { background: #071A3A !important; border-color: #1a2c4d !important; }
-        body.dark-mode .file-upload-box:hover { background: #0B1220 !important; border-color: var(--brand-color) !important; }
-        body.dark-mode .file-upload-box.has-file { background: rgba(16, 185, 129, 0.1) !important; border-color: #10b981 !important; }
-        body.dark-mode .terms-label { color: #94a3b8 !important; }
-        body.dark-mode #auth-check-loader { background: #071A3A !important; }
+        .bryt-modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(7, 26, 58, 0.85); backdrop-filter: blur(5px); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
+        .bryt-modal-card { background: white; border-radius: 24px; padding: 35px 25px; max-width: 380px; width: 100%; text-align: center; position: relative; animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .bryt-modal-img { height: 40px; margin-bottom: 20px; }
+        .bryt-modal-title { font-size: 20px; font-weight: 800; color: var(--text-main); margin-bottom: 12px; }
+        .bryt-modal-text { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; font-weight: 500;}
+        .bryt-modal-link { display: inline-block; color: var(--brand-color); font-weight: 800; margin-bottom: 25px; text-decoration: none; font-size: 14px;}
+        .bryt-modal-link:hover { text-decoration: underline; }
+        .bryt-modal-btn { background: var(--brand-color); color: white; width: 100%; padding: 15px; border-radius: 14px; font-weight: 800; border: none; cursor: pointer; font-family: 'Sora', sans-serif; font-size: 15px; margin-bottom: 10px;}
+        .bryt-modal-cancel { background: transparent; color: var(--text-muted); border: none; font-weight: 700; cursor: pointer; font-family: 'Sora', sans-serif; width: 100%; padding: 10px;}
+
+        body.dark-mode .pricing-tier, body.dark-mode .bryt-modal-card { background: #071A3A !important; border-color: #1a2c4d !important; }
+        body.dark-mode .pricing-tier h2, body.dark-mode .pricing-tier ul li, body.dark-mode .bryt-modal-title { color: #f1f5f9 !important; }
     </style>
 </head>
 <body>
-    <script>
-        if (localStorage.getItem('theme') === 'dark') {
-            document.body.classList.add('dark-mode');
-        }
-    </script>
+    <script>if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark-mode');</script>
 
-    <div id="auth-check-loader">
-        <div class="spinner"></div>
-        <p style="margin-top: 15px; font-weight: 600; color: #64748b; font-size: 14px;">Preparing application...</p>
-    </div>
+    <div id="auth-check-loader"><div class="spinner"></div><p style="margin-top: 15px; font-weight: 600; color: #64748b; font-size: 14px;">Preparing application...</p></div>
 
     <div class="app-container">
         <div class="header">
@@ -127,25 +115,20 @@
 
         <div class="content-area" style="padding: 20px 20px 90px;">
             
-            <div class="premium-card">
-                <div class="premium-badge">Seller Plan</div>
-                <div class="price-text">₦3,100</div>
-                <div class="price-sub">Includes ₦100 processing fee. Valid for 15 slots.</div>
+            <div class="pricing-tier">
+                <div class="badge">Seller Plan</div>
+                <h2>₦3,000 <span style="font-size: 14px; color: var(--text-muted); font-weight: 600;">/ BRYT Pay</span></h2>
+                <div class="subtitle">Valid for 15 slots. (₦3,100 via Paystack)</div>
                 
-                <ul class="perks-list">
-                    <li><i class="fas fa-check-circle"></i> Lifetime Blue Tick Verification</li>
-                    <li><i class="fas fa-check-circle"></i> Post up to 15 Active Items</li>
-                    <li><i class="fas fa-check-circle"></i> Direct WhatsApp Messaging</li>
+                <ul>
+                    <li><i class="fas fa-check"></i> Lifetime Blue Tick Verification</li>
+                    <li><i class="fas fa-check"></i> Post up to 15 Active Items</li>
+                    <li><i class="fas fa-check"></i> Direct WhatsApp Messaging</li>
+                    <li><i class="fas fa-check"></i> Store Performance Analytics</li>
                 </ul>
-
-                <div class="payment-box">
-                    <i class="fas fa-lock"></i>
-                    <span class="bank-name">Payments secured by Paystack</span>
-                </div>
             </div>
 
             <form id="regForm" onsubmit="initiatePaystack(event)">
-                
                 <div class="form-section-title"><i class="fas fa-store" style="color: var(--brand-color);"></i> Business Details</div>
                 
                 <div class="form-group">
@@ -169,7 +152,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">What categories do you sell in? (Select all that apply)</label>
+                    <label class="form-label">What categories do you sell in? (Max 5)</label>
                     <div class="chip-grid">
                         <label><input type="checkbox" class="cat-checkbox" value="Gadgets"><span class="chip-label">Gadgets</span></label>
                         <label><input type="checkbox" class="cat-checkbox" value="Fashion"><span class="chip-label">Fashion</span></label>
@@ -177,12 +160,8 @@
                         <label><input type="checkbox" class="cat-checkbox" value="Transport"><span class="chip-label">Transport</span></label>
                         <label><input type="checkbox" class="cat-checkbox" value="Beauty"><span class="chip-label">Beauty</span></label>
                         <label><input type="checkbox" class="cat-checkbox" value="Health"><span class="chip-label">Health</span></label>
-                        <label><input type="checkbox" class="cat-checkbox" value="CampusServices"><span class="chip-label">Campus Services</span></label>
-                        <label><input type="checkbox" class="cat-checkbox" value="Professional"><span class="chip-label">Professional</span></label>
+                        <label><input type="checkbox" class="cat-checkbox" value="CampusServices"><span class="chip-label">Services</span></label>
                         <label><input type="checkbox" class="cat-checkbox" value="Tutorials"><span class="chip-label">Tutorials</span></label>
-                        <label><input type="checkbox" class="cat-checkbox" value="Books"><span class="chip-label">Books</span></label>
-                        <label><input type="checkbox" class="cat-checkbox" value="Accommodation"><span class="chip-label">Hostels</span></label>
-                        <label><input type="checkbox" class="cat-checkbox" value="Electronics"><span class="chip-label">Electronics</span></label>
                     </div>
                 </div>
 
@@ -208,76 +187,73 @@
 
                 <div class="terms-group">
                     <input type="checkbox" id="vendor-terms" class="terms-checkbox" required>
-                    <label for="vendor-terms" class="terms-label">
-                        I have read and agree to the <a href="../vendors-policy/" target="_blank">Vendor Policy</a> & Terms. *
-                    </label>
+                    <label for="vendor-terms" class="terms-label">I have read and agree to the <a href="../vendors-policy/" target="_blank">Vendor Policy</a> & Terms. *</label>
                 </div>
 
-                <button type="submit" id="submitBtn" class="submit-btn">Pay ₦3,100 & Submit</button>
+                <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 20px;">
+                    <button type="button" id="brytPayBtn" class="submit-btn btn-bryt" onclick="triggerBrytPayFlow()">
+                        Pay ₦3,000 with <img src="https://i.ibb.co/nNLfs1r3/brytpay-logo.png" style="height: 18px; margin-left: 6px;">
+                    </button>
+                    <!-- 🚀 UPDATED PAYSTACK BUTTON TEXT -->
+                    <button type="submit" id="submitBtn" class="submit-btn btn-paystack">Pay ₦3,100 via Paystack</button>
+                </div>
             </form>
+        </div>
+    </div>
+
+    <div id="brytWalletModal" class="bryt-modal-overlay">
+        <div class="bryt-modal-card">
+            <img src="https://i.ibb.co/nNLfs1r3/brytpay-logo.png" class="bryt-modal-img">
+            <h3 class="bryt-modal-title">BRYT Pay Wallet Required</h3>
+            <p class="bryt-modal-text">To proceed with this payment method, please ensure you have an active BRYT Pay account and your wallet is funded with at least <strong>₦3,000</strong>.</p>
+            
+            <a href="https://brytpay.name.ng/auth/login.html" target="_blank" class="bryt-modal-link">I don't have a wallet. Create one here.</a>
+            
+            <button class="bryt-modal-btn" onclick="executeBrytPayCheckout()">I have a wallet, Proceed</button>
+            <button class="bryt-modal-cancel" onclick="closeBrytModal()">Cancel</button>
         </div>
     </div>
 
     <script src="../asset/script.js"></script>
 
    <script>
-        // ⚠️ CLOUDINARY CONFIG
         const CLOUD_NAME = "dgsblxgni"; 
-
-        // ⚠️ PAYSTACK CONFIG
         const PAYSTACK_PUBLIC_KEY = "pk_live_f1ca0bad0d6913267fb525e6c58cd2c447a1ae29";
 
         let currentUser = null;
 
         document.addEventListener("DOMContentLoaded", async () => {
             const { data: { session } } = await supabaseClient.auth.getSession();
-            
-            if (!session) { 
-                window.location.href = "../login/index.html?redirect=../vendor-reg/index.html"; 
-                return; 
-            }
-            
+            if (!session) { window.location.href = "../login/index.html?redirect=../vendor-reg/index.html"; return; }
             currentUser = session.user;
 
             try {
-                const { data: existingVendor } = await supabaseClient
-                    .from('vendors')
-                    .select('id')
-                    .eq('user_id', currentUser.id)
-                    .single();
-
-                if (existingVendor) {
-                    window.location.href = "../add-product/index.html";
-                    return;
-                }
-                
+                const { data: existingVendor } = await supabaseClient.from('vendors').select('id').eq('user_id', currentUser.id).single();
+                if (existingVendor) { window.location.href = "../add-product/index.html"; return; }
                 document.getElementById('auth-check-loader').style.display = 'none';
                 setupCategoryLimit();
-
             } catch (error) {
                 document.getElementById('auth-check-loader').style.display = 'none';
                 setupCategoryLimit();
             }
         });
         
-        // Ensure max 5 categories selected
         function setupCategoryLimit() {
             const checkboxes = document.querySelectorAll('.cat-checkbox');
             checkboxes.forEach(box => {
                 box.addEventListener('change', function() {
                     const checkedCount = document.querySelectorAll('.cat-checkbox:checked').length;
-                    if (checkedCount > 5) {
-                        this.checked = false;
-                        alert("You can only select a maximum of 5 categories.");
-                    }
+                    if (checkedCount > 5) { this.checked = false; alert("You can only select a maximum of 5 categories."); }
                 });
             });
         }
 
-        // Handle visual file upload labels
         function updateFileLabel(input, labelId, boxId) {
             if (input.files && input.files[0]) {
-                // Failsafe escape
+                if (input.files[0].size > 5 * 1024 * 1024) {
+                    alert("File is too large. Maximum size is 5MB.");
+                    input.value = ""; return;
+                }
                 const safeName = String(input.files[0].name).replace(/[&<>'"]/g, tag => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'}[tag]));
                 document.getElementById(labelId).innerHTML = `<span style="color: #10b981;"><i class="fas fa-check-circle"></i> ${safeName}</span>`;
                 document.getElementById(boxId).classList.add('has-file');
@@ -288,95 +264,134 @@
             const formData = new FormData();
             formData.append('file', file);
             formData.append('upload_preset', 'afit_media'); 
-            
             const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: 'POST', body: formData });
             const data = await res.json();
             if (!res.ok) throw new Error(data.error.message);
             return data.secure_url;
         }
 
-        // 🚀 PHASE 1: INITIATE PAYSTACK PAYMENT
-        function initiatePaystack(e) {
-            e.preventDefault();
+        function triggerBrytPayFlow() {
+            const form = document.getElementById('regForm');
+            const selectedCats = document.querySelectorAll('.cat-checkbox:checked').length;
             
-            const btn = document.getElementById('submitBtn');
-            const termsChecked = document.getElementById('vendor-terms').checked;
+            if (!form.checkValidity()) { form.reportValidity(); return; }
+            if (selectedCats === 0) return alert("Please select at least one category.");
+            if (selectedCats > 5) return alert("You can only select a maximum of 5 categories.");
+            
+            document.getElementById('brytWalletModal').style.display = 'flex';
+        }
+
+        function closeBrytModal() {
+            document.getElementById('brytWalletModal').style.display = 'none';
+        }
+
+        async function executeBrytPayCheckout() {
+            closeBrytModal();
+            const btn = document.getElementById('brytPayBtn');
+            const pStackBtn = document.getElementById('submitBtn');
             
             const selectedCats = [];
             document.querySelectorAll('.cat-checkbox:checked').forEach(c => selectedCats.push(c.value));
             
-            // Pre-payment validation
-            if(selectedCats.length === 0) return alert("Please select at least one category for your business.");
-            if(selectedCats.length > 5) return alert("You can only select a maximum of 5 categories.");
-            if (!termsChecked) return alert("You must agree to the Vendor Policy to submit your application.");
-
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connecting to Paystack...';
-
-            let paystackHandler = PaystackPop.setup({
-                key: PAYSTACK_PUBLIC_KEY,
-                email: currentUser.email,
-                amount: 310000, // 3,100 NGN in Kobo
-                currency: 'NGN',
-                callback: function(response) {
-                    // 🚀 PHASE 2: PAYMENT SUCCESSFUL, PROCEED TO DATABASE SAVING
-                    processFinalSubmission(response.reference, selectedCats);
-                },
-                onClose: function() {
-                    // User closed the payment window
-                    alert('Payment window closed. Your application has not been submitted.');
-                    btn.disabled = false;
-                    btn.innerText = 'Pay ₦3,100 & Submit';
-                }
-            });
-
-            paystackHandler.openIframe();
-        }
-
-        // 🚀 PHASE 3: UPLOAD FILES & SAVE TO SUPABASE (Strictly after payment)
-        async function processFinalSubmission(paystackReference, selectedCats) {
-            const btn = document.getElementById('submitBtn');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading Files... Please wait.';
+            btn.disabled = true; pStackBtn.disabled = true;
+            const originalBtnHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading Files...';
 
             try {
-                // 1. Upload Images to Cloudinary
                 const logoUrl = await uploadToCloudinary(document.getElementById('f-logo').files[0]);
                 const idUrl = await uploadToCloudinary(document.getElementById('f-id').files[0]);
 
-                const tempCode = 'BRYT-V-' + Math.floor(1000 + Math.random() * 9000);
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Securing Checkout Session...';
 
-                btn.innerHTML = '<i class="fas fa-save"></i> Saving Application...';
-                
-                // 2. Insert Data into Supabase
-                const { error } = await supabaseClient.from('vendors').insert([{
-                    user_id: currentUser.id,
-                    email: currentUser.email,                
-                    vendor_code: tempCode,
-                    business_name: document.getElementById('v-name').value.trim(),
-                    whatsapp_number: document.getElementById('v-whatsapp').value.trim(),
-                    location: document.getElementById('v-location').value.trim(),
-                    description: document.getElementById('v-desc').value.trim(),
-                    categories: selectedCats.join(", "),
-                    logo_url: logoUrl,
-                    receipt_url: "Paystack Ref: " + paystackReference, 
-                    student_id_url: idUrl,
-                    subscription_plan: 'Verified', 
-                    max_items: 15,
-                    is_active: false 
-                }]);
+                const { data: resData, error } = await supabaseClient.functions.invoke('dgm-initiate-checkout', {
+                    body: {
+                        business_name: document.getElementById('v-name').value.trim(),
+                        whatsapp_number: document.getElementById('v-whatsapp').value.trim(),
+                        location: document.getElementById('v-location').value.trim(),
+                        description: document.getElementById('v-desc').value.trim(),
+                        categories: selectedCats.join(", "),
+                        logo_url: logoUrl, student_id_url: idUrl
+                    }
+                });
 
-                if (error) throw error;
+                if (error) throw new Error(error.message);
+                if (resData && !resData.success) throw new Error(resData.message);
 
-                alert("Payment Successful & Application Submitted! You will be redirected to the dashboard to wait for admin approval.");
-                window.location.href = "../add-product/index.html";
+                btn.innerHTML = '<i class="fas fa-check"></i> Redirecting to BRYT Pay...';
+                window.location.href = resData.checkout_url;
 
             } catch (error) {
-                console.error(error);
-                // Critical error handling if upload fails AFTER payment
-                alert(`CRITICAL: Payment succeeded but files failed to save. Please screenshot this and send to Support. Reference: ${paystackReference}`);
-                btn.innerText = "Error: Contact Support";
+                console.error(error); alert(`Error: ${error.message}`);
+                btn.disabled = false; pStackBtn.disabled = false; btn.innerHTML = originalBtnHTML;
             }
         }
+
+        function initiatePaystack(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const brytBtn = document.getElementById('brytPayBtn');
+            
+            const selectedCats = [];
+            document.querySelectorAll('.cat-checkbox:checked').forEach(c => selectedCats.push(c.value));
+            
+            if(selectedCats.length === 0) return alert("Please select at least one category.");
+            if(selectedCats.length > 5) return alert("Maximum of 5 categories.");
+
+            btn.disabled = true; brytBtn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connecting to Paystack...';
+
+            let paystackHandler = PaystackPop.setup({
+                key: PAYSTACK_PUBLIC_KEY, 
+                email: currentUser.email, 
+                // 🚀 UPDATED PAYSTACK PRICING (3,100 NGN)
+                amount: 310000, 
+                currency: 'NGN',
+                callback: function(response) { processFinalSubmission(response.reference, selectedCats); },
+                onClose: function() {
+                    alert('Payment window closed.');
+                    btn.disabled = false; brytBtn.disabled = false; btn.innerText = 'Pay ₦3,100 via Paystack';
+                }
+            });
+            paystackHandler.openIframe();
+        }
+
+        async function processFinalSubmission(paystackReference, selectedCats) {
+        const btn = document.getElementById('submitBtn');
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading Files... Please wait.';
+
+        try {
+            const logoUrl = await uploadToCloudinary(document.getElementById('f-logo').files[0]);
+            const idUrl = await uploadToCloudinary(document.getElementById('f-id').files[0]);
+
+            btn.innerHTML = '<i class="fas fa-lock"></i> Verifying Payment Securely...';
+            
+            // 🚀 CALL THE SECURE BACKEND INSTEAD OF THE DATABASE DIRECTLY
+            const { data: resData, error } = await supabaseClient.functions.invoke('dgm-verify-paystack', {
+                body: {
+                    reference: paystackReference,
+                    vendorData: {
+                        business_name: document.getElementById('v-name').value.trim(),
+                        whatsapp_number: document.getElementById('v-whatsapp').value.trim(),
+                        location: document.getElementById('v-location').value.trim(),
+                        description: document.getElementById('v-desc').value.trim(),
+                        categories: selectedCats.join(", "),
+                        logo_url: logoUrl,
+                        student_id_url: idUrl
+                    }
+                }
+            });
+
+            if (error) throw new Error(error.message);
+            if (resData && !resData.success) throw new Error(resData.message);
+
+            alert("Payment Verified & Application Submitted! You will be redirected to the dashboard to wait for admin approval.");
+            window.location.href = "../add-product/index.html";
+
+        } catch (error) {
+            alert(`CRITICAL: Registration failed. Support Reference: ${paystackReference}\nReason: ${error.message}`);
+            btn.innerText = "Error: Contact Support";
+        }
+    }
     </script>
 </body>
 </html>
